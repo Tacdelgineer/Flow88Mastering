@@ -9,9 +9,11 @@ A simple Windows VST3 mastering plugin for electronic music producers.
 ![Status](https://img.shields.io/badge/Status-Early%20Release-yellow?style=for-the-badge)
 ![License](https://img.shields.io/badge/License-MIT-black?style=for-the-badge)
 
-![Flow88 Mastering screenshot](media/screenshot.png)
 
 ![Flow88 Mastering demo](media/demo.gif)
+
+![Flow88 Mastering screenshot](media/screenshot.png)
+
 
 ## What it is
 Flow88 Mastering is a small Windows VST3 mastering plugin I built with AI-assisted development. It gives electronic music producers a simple master-bus tool with metering, tone shaping, width, saturation, clipping/limiting, presets, and A/B comparison. It works, but it is still early and experimental.
