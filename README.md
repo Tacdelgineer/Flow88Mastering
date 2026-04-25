@@ -12,7 +12,6 @@ A simple Windows VST3 mastering plugin for electronic music producers.
 
 ![Flow88 Mastering demo](media/demo.gif)
 
-![Flow88 Mastering screenshot](media/screenshot.png)
 
 
 ## What it is
