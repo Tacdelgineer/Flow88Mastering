@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "id": "trance",
+  "displayName": "Trance",
+  "assistantSummary": "Bright propulsion, energetic width, and a cleaner low-end lane so the lift feels euphoric rather than smeared.",
+  "defaultLoudnessPreset": "Club",
+  "defaultTargetLufs": -9.2,
+  "macroDefaults": {
+    "toneTiltDb": 1.0,
+    "punchPct": 58.0,
+    "stereoWidthPct": 130.0,
+    "lowEndFocusPct": 74.0,
+    "attitudePct": 20.0
+  },
+  "advancedDefaults": {
+    "inputTrimDb": 0.0,
+    "outputTrimDb": 0.0,
+    "limiterCeilingDbTP": -1.0,
+    "oversampling": "4x",
+    "clipperAmountPct": 16.0,
+    "resonanceControlPct": 20.0,
+    "referenceModeEnabled": false
+  },
+  "analysisTargets": {
+    "lufsIntegrated": -9.2,
+    "truePeakDbTP": -0.95,
+    "correlation": 0.12,
+    "tonalTilt": 0.26,
+    "spectralCurve": [-0.08, 0.04, 0.17, 0.22, 0.34, 0.41, 0.31]
+  },
+  "dspTuning": {
+    "toneScale": 1.12,
+    "punchScale": 0.96,
+    "widthScale": 1.16,
+    "lowEndFocusScale": 0.98,
+    "attitudeScale": 0.95,
+    "targetDriveBiasDb": 0.05,
+    "lowEndAnchorHz": 136.0,
+    "widthProtectHz": 148.0,
+    "dynamicsThresholdBiasDb": 0.15,
+    "limiterReleaseScale": 0.98,
+    "harshnessAmount": 0.26
+  },
+  "uiAccent": "#8B5CFF"
+}

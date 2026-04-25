@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "id": "techno",
+  "displayName": "Techno",
+  "assistantSummary": "Dense low-mid drive, firmer transient control, and a focused stereo picture that stays powerful late at night.",
+  "defaultLoudnessPreset": "Club",
+  "defaultTargetLufs": -8.8,
+  "macroDefaults": {
+    "toneTiltDb": 0.2,
+    "punchPct": 72.0,
+    "stereoWidthPct": 104.0,
+    "lowEndFocusPct": 90.0,
+    "attitudePct": 38.0
+  },
+  "advancedDefaults": {
+    "inputTrimDb": 0.0,
+    "outputTrimDb": 0.0,
+    "limiterCeilingDbTP": -1.0,
+    "oversampling": "2x",
+    "clipperAmountPct": 24.0,
+    "resonanceControlPct": 28.0,
+    "referenceModeEnabled": false
+  },
+  "analysisTargets": {
+    "lufsIntegrated": -8.8,
+    "truePeakDbTP": -0.9,
+    "correlation": 0.31,
+    "tonalTilt": 0.03,
+    "spectralCurve": [0.04, 0.16, 0.12, 0.02, 0.09, 0.14, 0.08]
+  },
+  "dspTuning": {
+    "toneScale": 0.92,
+    "punchScale": 1.08,
+    "widthScale": 0.9,
+    "lowEndFocusScale": 1.12,
+    "attitudeScale": 1.08,
+    "targetDriveBiasDb": 0.2,
+    "lowEndAnchorHz": 150.0,
+    "widthProtectHz": 165.0,
+    "dynamicsThresholdBiasDb": -0.9,
+    "limiterReleaseScale": 0.92,
+    "harshnessAmount": 0.22
+  },
+  "uiAccent": "#16B8C9"
+}

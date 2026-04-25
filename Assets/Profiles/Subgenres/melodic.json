@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "id": "melodic",
+  "displayName": "Melodic",
+  "assistantSummary": "Open mids, emotional lift, and wide but steady imaging that keeps the drop elegant instead of brittle.",
+  "defaultLoudnessPreset": "Demo",
+  "defaultTargetLufs": -10.2,
+  "macroDefaults": {
+    "toneTiltDb": 0.9,
+    "punchPct": 54.0,
+    "stereoWidthPct": 124.0,
+    "lowEndFocusPct": 68.0,
+    "attitudePct": 16.0
+  },
+  "advancedDefaults": {
+    "inputTrimDb": 0.0,
+    "outputTrimDb": 0.0,
+    "limiterCeilingDbTP": -1.1,
+    "oversampling": "2x",
+    "clipperAmountPct": 14.0,
+    "resonanceControlPct": 18.0,
+    "referenceModeEnabled": false
+  },
+  "analysisTargets": {
+    "lufsIntegrated": -10.2,
+    "truePeakDbTP": -1.1,
+    "correlation": 0.17,
+    "tonalTilt": 0.22,
+    "spectralCurve": [-0.12, -0.03, 0.11, 0.19, 0.28, 0.36, 0.26]
+  },
+  "dspTuning": {
+    "toneScale": 1.08,
+    "punchScale": 0.92,
+    "widthScale": 1.08,
+    "lowEndFocusScale": 0.94,
+    "attitudeScale": 0.9,
+    "targetDriveBiasDb": -0.25,
+    "lowEndAnchorHz": 132.0,
+    "widthProtectHz": 150.0,
+    "dynamicsThresholdBiasDb": 0.35,
+    "limiterReleaseScale": 1.08,
+    "harshnessAmount": 0.2
+  },
+  "uiAccent": "#2C7DFF"
+}

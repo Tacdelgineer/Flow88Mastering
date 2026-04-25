@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "id": "house",
+  "displayName": "House",
+  "assistantSummary": "Solid kick-to-bass lock, polished top air, and confident club-ready loudness without losing calm.",
+  "defaultLoudnessPreset": "Club",
+  "defaultTargetLufs": -9.0,
+  "macroDefaults": {
+    "toneTiltDb": 0.5,
+    "punchPct": 62.0,
+    "stereoWidthPct": 116.0,
+    "lowEndFocusPct": 80.0,
+    "attitudePct": 18.0
+  },
+  "advancedDefaults": {
+    "inputTrimDb": 0.0,
+    "outputTrimDb": 0.0,
+    "limiterCeilingDbTP": -1.0,
+    "oversampling": "2x",
+    "clipperAmountPct": 18.0,
+    "resonanceControlPct": 22.0,
+    "referenceModeEnabled": false
+  },
+  "analysisTargets": {
+    "lufsIntegrated": -9.0,
+    "truePeakDbTP": -1.0,
+    "correlation": 0.24,
+    "tonalTilt": 0.15,
+    "spectralCurve": [-0.18, 0.06, 0.18, 0.11, 0.21, 0.33, 0.18]
+  },
+  "dspTuning": {
+    "toneScale": 1.0,
+    "punchScale": 1.0,
+    "widthScale": 1.0,
+    "lowEndFocusScale": 1.0,
+    "attitudeScale": 0.95,
+    "targetDriveBiasDb": 0.1,
+    "lowEndAnchorHz": 140.0,
+    "widthProtectHz": 155.0,
+    "dynamicsThresholdBiasDb": -0.2,
+    "limiterReleaseScale": 1.0,
+    "harshnessAmount": 0.18
+  },
+  "uiAccent": "#4FD6FF"
+}

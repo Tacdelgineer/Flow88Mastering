@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "id": "club",
+  "displayName": "Club",
+  "assistantSummarySuffix": "pushes density and impact while keeping the limiter modern and composed.",
+  "macroDelta": {
+    "toneTiltDb": 0.0,
+    "punchPct": 6.0,
+    "stereoWidthPct": -2.0,
+    "lowEndFocusPct": 6.0,
+    "attitudePct": 2.0
+  },
+  "advancedDelta": {
+    "inputTrimDb": 0.0,
+    "outputTrimDb": 0.0,
+    "limiterCeilingDbTP": -0.25,
+    "oversampling": "4x",
+    "clipperAmountPct": -4.0,
+    "resonanceControlPct": 0.0,
+    "referenceModeEnabled": false
+  },
+  "dspTuningDelta": {
+    "toneScale": 0.0,
+    "punchScale": 0.1,
+    "widthScale": -0.02,
+    "lowEndFocusScale": 0.06,
+    "attitudeScale": 0.0,
+    "targetDriveBiasDb": -0.2,
+    "lowEndAnchorHz": 8.0,
+    "widthProtectHz": 6.0,
+    "dynamicsThresholdBiasDb": -0.3,
+    "limiterReleaseScale": 0.16,
+    "harshnessAmount": 0.04
+  },
+  "uiAccentOverride": "#16B8C9"
+}

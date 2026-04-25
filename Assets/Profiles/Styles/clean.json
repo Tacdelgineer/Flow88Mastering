@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "id": "clean",
+  "displayName": "Clean",
+  "assistantSummarySuffix": "leans open, polished, and conservative for translation-first mastering.",
+  "macroDelta": {
+    "toneTiltDb": 0.15,
+    "punchPct": -6.0,
+    "stereoWidthPct": 2.0,
+    "lowEndFocusPct": 2.0,
+    "attitudePct": -12.0
+  },
+  "advancedDelta": {
+    "inputTrimDb": 0.0,
+    "outputTrimDb": 0.0,
+    "limiterCeilingDbTP": -0.1,
+    "oversampling": "4x",
+    "clipperAmountPct": -8.0,
+    "resonanceControlPct": 8.0,
+    "referenceModeEnabled": false
+  },
+  "dspTuningDelta": {
+    "toneScale": -0.05,
+    "punchScale": -0.08,
+    "widthScale": -0.06,
+    "lowEndFocusScale": 0.02,
+    "attitudeScale": -0.12,
+    "targetDriveBiasDb": -0.25,
+    "lowEndAnchorHz": 4.0,
+    "widthProtectHz": 8.0,
+    "dynamicsThresholdBiasDb": 0.4,
+    "limiterReleaseScale": 0.1,
+    "harshnessAmount": 0.18
+  },
+  "uiAccentOverride": "#4FD6FF"
+}

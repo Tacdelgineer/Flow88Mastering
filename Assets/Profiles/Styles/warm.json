@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "id": "warm",
+  "displayName": "Warm",
+  "assistantSummarySuffix": "adds a gentler contour and softer upper-energy feel while protecting the groove.",
+  "macroDelta": {
+    "toneTiltDb": -0.5,
+    "punchPct": -3.0,
+    "stereoWidthPct": -4.0,
+    "lowEndFocusPct": 4.0,
+    "attitudePct": 1.0
+  },
+  "advancedDelta": {
+    "inputTrimDb": 0.0,
+    "outputTrimDb": 0.0,
+    "limiterCeilingDbTP": -0.05,
+    "oversampling": "2x",
+    "clipperAmountPct": 0.0,
+    "resonanceControlPct": 4.0,
+    "referenceModeEnabled": false
+  },
+  "dspTuningDelta": {
+    "toneScale": -0.08,
+    "punchScale": -0.05,
+    "widthScale": -0.07,
+    "lowEndFocusScale": 0.04,
+    "attitudeScale": -0.04,
+    "targetDriveBiasDb": -0.12,
+    "lowEndAnchorHz": 6.0,
+    "widthProtectHz": 10.0,
+    "dynamicsThresholdBiasDb": 0.2,
+    "limiterReleaseScale": 0.08,
+    "harshnessAmount": 0.26
+  },
+  "uiAccentOverride": "#C98A52"
+}

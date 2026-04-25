@@ -1,0 +1,17 @@
+build/
+.vs/
+*.user
+*.VC.db
+*.VC.opendb
+*.suo
+*.opensdf
+cmake-build-*/
+out/
+DerivedData/
+TestAudio/
+Flow88MasterEval_artefacts/
+Flow88MasterTests_artefacts/
+*.exe
+*.pdb
+*.ilk
+.DS_Store

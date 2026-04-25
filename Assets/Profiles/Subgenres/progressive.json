@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "id": "progressive",
+  "displayName": "Progressive",
+  "assistantSummary": "Measured dynamics, steady depth, and a smoother tonal envelope that keeps long-form arrangements expensive and controlled.",
+  "defaultLoudnessPreset": "Demo",
+  "defaultTargetLufs": -10.0,
+  "macroDefaults": {
+    "toneTiltDb": 0.4,
+    "punchPct": 56.0,
+    "stereoWidthPct": 118.0,
+    "lowEndFocusPct": 76.0,
+    "attitudePct": 12.0
+  },
+  "advancedDefaults": {
+    "inputTrimDb": 0.0,
+    "outputTrimDb": 0.0,
+    "limiterCeilingDbTP": -1.0,
+    "oversampling": "2x",
+    "clipperAmountPct": 12.0,
+    "resonanceControlPct": 17.0,
+    "referenceModeEnabled": false
+  },
+  "analysisTargets": {
+    "lufsIntegrated": -10.0,
+    "truePeakDbTP": -1.05,
+    "correlation": 0.19,
+    "tonalTilt": 0.12,
+    "spectralCurve": [-0.16, -0.05, 0.08, 0.14, 0.22, 0.29, 0.22]
+  },
+  "dspTuning": {
+    "toneScale": 0.96,
+    "punchScale": 0.88,
+    "widthScale": 1.0,
+    "lowEndFocusScale": 1.0,
+    "attitudeScale": 0.84,
+    "targetDriveBiasDb": -0.18,
+    "lowEndAnchorHz": 138.0,
+    "widthProtectHz": 154.0,
+    "dynamicsThresholdBiasDb": 0.3,
+    "limiterReleaseScale": 1.12,
+    "harshnessAmount": 0.24
+  },
+  "uiAccent": "#C98A52"
+}
