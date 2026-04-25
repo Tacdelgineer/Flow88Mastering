@@ -1,0 +1,60 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Build and Publish Release
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Configure CMake
+        shell: pwsh
+        run: |
+          cmake -S . -B build -G "Visual Studio 17 2022" -A x64
+
+      - name: Build Release
+        shell: pwsh
+        run: |
+          cmake --build build --config Release --parallel
+
+      - name: Package VST3
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force -Path release | Out-Null
+
+          $vst3 = Get-ChildItem -Path build -Recurse -Directory -Filter "*.vst3" | Select-Object -First 1
+
+          if (-not $vst3) {
+            Write-Error "No .vst3 plugin bundle found in build output."
+            exit 1
+          }
+
+          Copy-Item $vst3.FullName -Destination "release\" -Recurse -Force
+
+          if (Test-Path "install.bat") {
+            Copy-Item "install.bat" "release\install.bat" -Force
+          }
+
+          if (Test-Path "README.md") {
+            Copy-Item "README.md" "release\README.md" -Force
+          }
+
+          Compress-Archive -Path "release\*" -DestinationPath "Flow88Mastering-Windows-VST3.zip" -Force
+
+      - name: Publish GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: Flow88Mastering-Windows-VST3.zip
+          generate_release_notes: true
