@@ -2,59 +2,27 @@ name: Release
 
 on:
   push:
-    tags:
-      - "v*"
+    tags: ['v*']
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
+  verify:
+    uses: ./.github/workflows/windows-build.yml
   release:
-    name: Build and Publish Release
-    runs-on: windows-latest
-
+    needs: verify
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+      actions: read
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          submodules: recursive
-
-      - name: Configure CMake
-        shell: pwsh
-        run: |
-          cmake -S . -B build -G "Visual Studio 17 2022" -A x64
-
-      - name: Build Release
-        shell: pwsh
-        run: |
-          cmake --build build --config Release --parallel
-
-      - name: Package VST3
-        shell: pwsh
-        run: |
-          New-Item -ItemType Directory -Force -Path release | Out-Null
-
-          $vst3 = Get-ChildItem -Path build -Recurse -Directory -Filter "*.vst3" | Select-Object -First 1
-
-          if (-not $vst3) {
-            Write-Error "No .vst3 plugin bundle found in build output."
-            exit 1
-          }
-
-          Copy-Item $vst3.FullName -Destination "release\" -Recurse -Force
-
-          if (Test-Path "install.bat") {
-            Copy-Item "install.bat" "release\install.bat" -Force
-          }
-
-          if (Test-Path "README.md") {
-            Copy-Item "README.md" "release\README.md" -Force
-          }
-
-          Compress-Archive -Path "release\*" -DestinationPath "Flow88Mastering-Windows-VST3.zip" -Force
-
-      - name: Publish GitHub Release
-        uses: softprops/action-gh-release@v2
-        with:
-          files: Flow88Mastering-Windows-VST3.zip
-          generate_release_notes: true
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+      - name: Download verified artifact from this run
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh run download "$GITHUB_RUN_ID" --repo "$GITHUB_REPOSITORY" --name Flow88Mastering-Windows-VST3 --dir release
+      - name: Publish beta only after all required checks pass
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" release/Flow88Mastering-Windows-VST3.zip --verify-tag --prerelease --title "Flow88 Master $GITHUB_REF_NAME" --notes-file docs/beta-release-notes.md
