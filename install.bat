@@ -1,4 +1,6 @@
 @echo off
+setlocal
+cd /d "%~dp0"
 echo ===================================================
 echo Flow88 Mastering - VST3 Installer
 echo ===================================================

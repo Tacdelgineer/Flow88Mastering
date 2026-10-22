@@ -229,3 +229,20 @@ Main targets in `CMakeLists.txt`:
 - improve limiter maturity
 - add true level-matched A/B
 - continue polishing diagnostics and UI alignment in-host
+
+## Host timing and saved state
+
+The two JUCE IIR oversamplers use integer delay compensation. The processor
+reports the maximum of their delays for every mode and delays the shorter paths
+to match it. Bypass uses the same fixed dry delay without input/output trim or
+A/B correction. Oversized host buffers are split into prepared-size views using
+preallocated DSP storage. Oversampling mode changes reset filters; click-free
+mode switching is not guaranteed.
+
+The current APVTS parameters are authoritative when reopening a session. Saving
+refreshes the active A/B snapshot, while the inactive snapshot remains available
+for A/B recall. Restoring an older snapshot must not overwrite current controls.
+
+`Flow88Acceptance` exercises both the processor and the actual loaded VST3 bundle.
+Independent windowed-sinc reconstruction checks limiter output; a successful
+Steinberg validator result alone does not establish safe true-peak behavior.

@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Linux-c++"
+	tests="17"
+	failures="4"
+	disabled="0"
+	skipped="0"
+	hostname="mini"
+	time="7"
+	timestamp="2026-10-22T04:03:25"
+	>
+	<testcase name="Flow88MasterTests" classname="Flow88MasterTests" time="0.519704" status="run">
+		<properties/>
+		<system-out>Flow88MasterTests passed
+</system-out>
+	</testcase>
+	<testcase name="Processor.lifecycle" classname="Processor.lifecycle" time="0.0499098" status="run">
+		<properties/>
+		<system-out>PASS lifecycle (processor)
+</system-out>
+	</testcase>
+	<testcase name="VST3.lifecycle" classname="VST3.lifecycle" time="0.167" status="run">
+		<properties/>
+		<system-out>PASS lifecycle (loaded VST3)
+</system-out>
+	</testcase>
+	<testcase name="Processor.state" classname="Processor.state" time="0.098493" status="run">
+		<properties/>
+		<system-out>PASS state (processor)
+</system-out>
+	</testcase>
+	<testcase name="VST3.state" classname="VST3.state" time="0.914055" status="run">
+		<properties/>
+		<system-out>PASS state (loaded VST3)
+</system-out>
+	</testcase>
+	<testcase name="Processor.audio" classname="Processor.audio" time="0.409945" status="run">
+		<properties/>
+		<system-out>90 stereo rate/block/oversampling combinations; zero and large variable blocks
+PASS audio (processor)
+</system-out>
+	</testcase>
+	<testcase name="VST3.audio" classname="VST3.audio" time="3.07245" status="run">
+		<properties/>
+		<system-out>90 stereo rate/block/oversampling combinations; zero and large variable blocks
+PASS audio (loaded VST3)
+</system-out>
+	</testcase>
+	<testcase name="Processor.controls" classname="Processor.controls" time="0.14935" status="run">
+		<properties/>
+		<system-out>inputTrimDb audio RMS difference=0.384206
+outputTrimDb audio RMS difference=0.14172
+toneTiltDb audio RMS difference=0.22703
+punchPct audio RMS difference=0.009409
+stereoWidthPct audio RMS difference=0.0642263
+lowEndFocusPct audio RMS difference=0.120114
+attitudePct audio RMS difference=0.0558441
+targetLufs audio RMS difference=0.15733
+clipperAmountPct audio RMS difference=0.0447402
+resonanceControlPct audio RMS difference=0.0392553
+limiterCeilingDbTP audio RMS difference=0.131894
+PASS controls (processor)
+</system-out>
+	</testcase>
+	<testcase name="VST3.controls" classname="VST3.controls" time="0.912739" status="run">
+		<properties/>
+		<system-out>inputTrimDb audio RMS difference=0.384206
+outputTrimDb audio RMS difference=0.14172
+toneTiltDb audio RMS difference=0.22703
+punchPct audio RMS difference=0.009409
+stereoWidthPct audio RMS difference=0.0642263
+lowEndFocusPct audio RMS difference=0.120114
+attitudePct audio RMS difference=0.0558441
+targetLufs audio RMS difference=0.15733
+clipperAmountPct audio RMS difference=0.0447402
+resonanceControlPct audio RMS difference=0.0392553
+limiterCeilingDbTP audio RMS difference=0.131894
+PASS controls (loaded VST3)
+</system-out>
+	</testcase>
+	<testcase name="Processor.bypass" classname="Processor.bypass" time="0.119319" status="run">
+		<properties/>
+		<system-out>PASS bypass (processor)
+</system-out>
+	</testcase>
+	<testcase name="VST3.bypass" classname="VST3.bypass" time="0.0217976" status="run">
+		<properties/>
+		<system-out>PASS bypass (loaded VST3)
+</system-out>
+	</testcase>
+	<testcase name="Processor.extremes" classname="Processor.extremes" time="0.0422778" status="fail">
+		<failure message="Failed"/>
+		<properties/>
+		<system-out>oversampling=0 parameter endpoint=0 sample peak=-13.7002 dBFS
+oversampling=0 parameter endpoint=1 sample peak=-0.687721 dBFS
+oversampling=1 parameter endpoint=0 sample peak=-12.0338 dBFS
+oversampling=1 parameter endpoint=1 sample peak=3.59798 dBFS
+oversampling=2 parameter endpoint=0 sample peak=-12.137 dBFS
+oversampling=2 parameter endpoint=1 sample peak=2.65422 dBFS
+FAIL extremes: Clipping/extremes produce uncontrolled sample peaks
+</system-out>
+	</testcase>
+	<testcase name="VST3.extremes" classname="VST3.extremes" time="0.190791" status="fail">
+		<failure message="Failed"/>
+		<properties/>
+		<system-out>oversampling=0 parameter endpoint=0 sample peak=-13.7002 dBFS
+oversampling=0 parameter endpoint=1 sample peak=-0.687721 dBFS
+oversampling=1 parameter endpoint=0 sample peak=-12.0338 dBFS
+oversampling=1 parameter endpoint=1 sample peak=3.59798 dBFS
+oversampling=2 parameter endpoint=0 sample peak=-12.137 dBFS
+oversampling=2 parameter endpoint=1 sample peak=2.65422 dBFS
+FAIL extremes: Clipping/extremes produce uncontrolled sample peaks
+</system-out>
+	</testcase>
+	<testcase name="Processor.latency" classname="Processor.latency" time="0.0174946" status="run">
+		<properties/>
+		<system-out>oversampling=0 expected latency=6 reported=6
+oversampling=1 expected latency=6 reported=6
+oversampling=2 expected latency=6 reported=6
+PASS latency (processor)
+</system-out>
+	</testcase>
+	<testcase name="VST3.latency" classname="VST3.latency" time="0.090216" status="run">
+		<properties/>
+		<system-out>oversampling=0 expected latency=6 reported=6
+oversampling=1 expected latency=6 reported=6
+oversampling=2 expected latency=6 reported=6
+PASS latency (loaded VST3)
+</system-out>
+	</testcase>
+	<testcase name="Processor.truepeak" classname="Processor.truepeak" time="0.0674562" status="fail">
+		<failure message="Failed"/>
+		<properties/>
+		<system-out>rate=44100 oversampling=0 sample peak=-1.47382 dBFS; independent 16x reconstructed peak=5.64431 dBTP (ceiling -1.0)
+rate=44100 oversampling=1 sample peak=1.9982 dBFS; independent 16x reconstructed peak=2.79518 dBTP (ceiling -1.0)
+rate=44100 oversampling=2 sample peak=1.52821 dBFS; independent 16x reconstructed peak=1.84585 dBTP (ceiling -1.0)
+rate=48000 oversampling=0 sample peak=-1.47382 dBFS; independent 16x reconstructed peak=5.64431 dBTP (ceiling -1.0)
+rate=48000 oversampling=1 sample peak=1.9982 dBFS; independent 16x reconstructed peak=2.80142 dBTP (ceiling -1.0)
+rate=48000 oversampling=2 sample peak=1.52824 dBFS; independent 16x reconstructed peak=1.84557 dBTP (ceiling -1.0)
+rate=96000 oversampling=0 sample peak=-1.47382 dBFS; independent 16x reconstructed peak=5.64431 dBTP (ceiling -1.0)
+rate=96000 oversampling=1 sample peak=1.9982 dBFS; independent 16x reconstructed peak=2.81297 dBTP (ceiling -1.0)
+rate=96000 oversampling=2 sample peak=1.5305 dBFS; independent 16x reconstructed peak=1.84582 dBTP (ceiling -1.0)
+FAIL truepeak: True-peak ceiling exceeded on driven intersample stress signal
+</system-out>
+	</testcase>
+	<testcase name="VST3.truepeak" classname="VST3.truepeak" time="0.292456" status="fail">
+		<failure message="Failed"/>
+		<properties/>
+		<system-out>rate=44100 oversampling=0 sample peak=-1.47382 dBFS; independent 16x reconstructed peak=5.64431 dBTP (ceiling -1.0)
+rate=44100 oversampling=1 sample peak=1.9982 dBFS; independent 16x reconstructed peak=2.79518 dBTP (ceiling -1.0)
+rate=44100 oversampling=2 sample peak=1.52821 dBFS; independent 16x reconstructed peak=1.84585 dBTP (ceiling -1.0)
+rate=48000 oversampling=0 sample peak=-1.47382 dBFS; independent 16x reconstructed peak=5.64431 dBTP (ceiling -1.0)
+rate=48000 oversampling=1 sample peak=1.9982 dBFS; independent 16x reconstructed peak=2.80142 dBTP (ceiling -1.0)
+rate=48000 oversampling=2 sample peak=1.52824 dBFS; independent 16x reconstructed peak=1.84557 dBTP (ceiling -1.0)
+rate=96000 oversampling=0 sample peak=-1.47382 dBFS; independent 16x reconstructed peak=5.64431 dBTP (ceiling -1.0)
+rate=96000 oversampling=1 sample peak=1.9982 dBFS; independent 16x reconstructed peak=2.81297 dBTP (ceiling -1.0)
+rate=96000 oversampling=2 sample peak=1.5305 dBFS; independent 16x reconstructed peak=1.84582 dBTP (ceiling -1.0)
+FAIL truepeak: True-peak ceiling exceeded on driven intersample stress signal
+</system-out>
+	</testcase>
+</testsuite>

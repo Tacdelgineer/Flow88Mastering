@@ -2,58 +2,85 @@ name: Windows Build
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
   workflow_dispatch:
+  workflow_call:
+
+concurrency:
+  group: windows-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
 
 jobs:
   build:
-    name: Build Windows VST3
-    runs-on: windows-latest
-
+    name: Windows x64 Release and validation
+    runs-on: windows-2022
+    timeout-minutes: 45
+    defaults:
+      run:
+        shell: pwsh
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - name: Checkout pinned sources
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
           submodules: recursive
-
-      - name: Configure CMake
-        shell: pwsh
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - name: Checkout Steinberg validator SDK
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          repository: steinbergmedia/vst3sdk
+          ref: 9fad9770f2ae8542ab1a548a68c1ad1ac690abe0 # v3.8.0_build_66
+          path: validator-sdk
+          submodules: recursive
+      - name: Clean configure
         run: |
-          cmake -S . -B build -G "Visual Studio 17 2022" -A x64
-
-      - name: Build Release
-        shell: pwsh
+          New-Item -ItemType Directory -Force evidence | Out-Null
+          cmake --version | Tee-Object evidence/toolchain.txt
+          git submodule status | Tee-Object -Append evidence/toolchain.txt
+          cmake -S . -B build -G "Visual Studio 17 2022" -A x64 -DBUILD_TESTING=ON 2>&1 | Tee-Object evidence/configure.log
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Build Windows x64 Release
+        id: compile
         run: |
-          cmake --build build --config Release --parallel
-
-      - name: Package VST3
-        shell: pwsh
+          cmake --build build --config Release --parallel 4 2>&1 | Tee-Object evidence/build.log
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Build Steinberg validator
+        id: validator_build
         run: |
-          New-Item -ItemType Directory -Force -Path release | Out-Null
-
-          $vst3 = Get-ChildItem -Path build -Recurse -Directory -Filter "*.vst3" | Select-Object -First 1
-
-          if (-not $vst3) {
-            Write-Error "No .vst3 plugin bundle found in build output."
-            exit 1
-          }
-
-          Copy-Item $vst3.FullName -Destination "release\" -Recurse -Force
-
-          if (Test-Path "install.bat") {
-            Copy-Item "install.bat" "release\install.bat" -Force
-          }
-
-          if (Test-Path "README.md") {
-            Copy-Item "README.md" "release\README.md" -Force
-          }
-
-          Compress-Archive -Path "release\*" -DestinationPath "Flow88Mastering-Windows-VST3.zip" -Force
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
+          cmake -S validator-sdk -B validator-build -G "Visual Studio 17 2022" -A x64 -DSMTG_ENABLE_VSTGUI_SUPPORT=OFF -DSMTG_ENABLE_VST3_PLUGIN_EXAMPLES=OFF -DSMTG_ENABLE_VST3_HOSTING_EXAMPLES=OFF 2>&1 | Tee-Object evidence/validator-build.log
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          cmake --build validator-build --config Release --target validator --parallel 4 2>&1 | Tee-Object -Append evidence/validator-build.log
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Steinberg VST3 Validator
+        if: ${{ !cancelled() && steps.compile.outcome == 'success' && steps.validator_build.outcome == 'success' }}
+        run: |
+          $validator = @(Get-ChildItem validator-build -Recurse -File -Filter validator.exe)
+          if ($validator.Count -ne 1) { throw "Expected one built validator executable" }
+          & $validator[0].FullName "build/Flow88Master_artefacts/Release/VST3/Flow88 Master.vst3" 2>&1 | Tee-Object evidence/validator.log
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Processor and loaded VST3 audio checks
+        if: ${{ !cancelled() && steps.compile.outcome == 'success' }}
+        run: |
+          ctest --test-dir build -C Release --output-on-failure --output-junit "$PWD/evidence/tests.xml" 2>&1 | Tee-Object evidence/tests.log
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Package verified VST3
+        run: ./Scripts/Package-Windows.ps1
+      - name: Upload verified ZIP
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: Flow88Mastering-Windows-VST3
           path: Flow88Mastering-Windows-VST3.zip
+          if-no-files-found: error
+      - name: Upload verification evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: Windows-verification-evidence
+          path: |
+            evidence/
+            build/Testing/Temporary/LastTest.log
+          if-no-files-found: error

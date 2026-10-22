@@ -1,0 +1,179 @@
+MSBuild version 17.14.60+43b635718 for .NET Framework
+
+  Checking File Globs
+  1>Checking Build System
+  Generating Flow88MasterEval_artefacts/JuceLibraryCode/Flow88MasterEval_resources.rc
+  Generating Flow88Acceptance_artefacts/JuceLibraryCode/Flow88Acceptance_resources.rc
+  Generating Flow88MasterTests_artefacts/JuceLibraryCode/Flow88MasterTests_resources.rc
+  Building Custom Rule D:/a/Flow88Mastering/Flow88Mastering/CMakeLists.txt
+  Building Custom Rule D:/a/Flow88Mastering/Flow88Mastering/CMakeLists.txt
+  Building Custom Rule D:/a/Flow88Mastering/Flow88Mastering/CMakeLists.txt
+  Flow88Acceptance_rc_lib.vcxproj -> D:\a\Flow88Mastering\Flow88Mastering\build\Flow88Acceptance_rc_lib.dir\Release\Flow88Acceptance_rc_lib.lib
+  Flow88MasterTests_rc_lib.vcxproj -> D:\a\Flow88Mastering\Flow88Mastering\build\Flow88MasterTests_rc_lib.dir\Release\Flow88MasterTests_rc_lib.lib
+  Flow88MasterEval_rc_lib.vcxproj -> D:\a\Flow88Mastering\Flow88Mastering\build\Flow88MasterEval_rc_lib.dir\Release\Flow88MasterEval_rc_lib.lib
+  Generating Flow88Master_artefacts/JuceLibraryCode/Flow88Master_resources.rc
+  Building Custom Rule D:/a/Flow88Mastering/Flow88Mastering/CMakeLists.txt
+  Flow88Master_rc_lib.vcxproj -> D:\a\Flow88Mastering\Flow88Mastering\build\Flow88Master_rc_lib.dir\Release\Flow88Master_rc_lib.lib
+  Generating juce_binarydata_Flow88MasterAssets/JuceLibraryCode/BinaryData1.cpp, juce_binarydata_Flow88MasterAssets/JuceLibraryCode/BinaryData2.cpp, juce_binarydata_Flow88MasterAssets/JuceLibraryCode/BinaryData3.cpp, juce_binarydata_Flow88MasterAssets/JuceLibraryCode/BinaryData4.cpp, juce_binarydata_Flow88MasterAssets/JuceLibraryCode/BinaryData5.cpp, juce_binarydata_Flow88MasterAssets/JuceLibraryCode/BinaryData6.cpp, juce_binarydata_Flow88MasterAssets/JuceLibraryCode/BinaryData7.cpp, juce_binarydata_Flow88MasterAssets/JuceLibraryCode/BinaryData8.cpp, juce_binarydata_Flow88MasterAssets/JuceLibraryCode/BinaryData.h
+  Building Custom Rule D:/a/Flow88Mastering/Flow88Mastering/CMakeLists.txt
+  Building Custom Rule D:/a/Flow88Mastering/Flow88Mastering/CMakeLists.txt
+  juce_VST3ManifestHelper.cpp
+  BinaryData1.cpp
+  BinaryData2.cpp
+  BinaryData3.cpp
+  BinaryData4.cpp
+  BinaryData5.cpp
+  BinaryData6.cpp
+  BinaryData7.cpp
+  BinaryData8.cpp
+  Generating Code...
+  Flow88MasterAssets.vcxproj -> D:\a\Flow88Mastering\Flow88Mastering\build\Release\Flow88MasterAssets.lib
+  Building Custom Rule D:/a/Flow88Mastering/Flow88Mastering/CMakeLists.txt
+  FlowParameterLayout.cpp
+  Flow88Master_vst3_helper.vcxproj -> D:\a\Flow88Mastering\Flow88Mastering\build\Release\Flow88Master_vst3_helper.exe
+  FlowProfiles.cpp
+  FlowSessionState.cpp
+  FlowStateSerializer.cpp
+  FlowMasteringChain.cpp
+  FlowMeterSource.cpp
+  FlowOfflineAnalysis.cpp
+  juce_audio_basics.cpp
+  juce_core.cpp
+  juce_core_CompilationTime.cpp
+  juce_audio_formats.cpp
+  juce_audio_processors.cpp
+  juce_gui_extra.cpp
+  juce_gui_basics.cpp
+  juce_graphics.cpp
+  juce_graphics_Harfbuzz.cpp
+  juce_events.cpp
+  juce_data_structures.cpp
+  juce_audio_processors_headless.cpp
+  juce_audio_processors_headless_ara.cpp
+  Generating Code...
+  Compiling...
+  juce_audio_processors_headless_lv2_libs.cpp
+  juce_audio_utils.cpp
+  juce_audio_devices.cpp
+  juce_dsp.cpp
+  Generating Code...
+  juce_graphics_Sheenbidi.c
+  Flow88MasterCore.vcxproj -> D:\a\Flow88Mastering\Flow88Mastering\build\Release\Flow88MasterCore.lib
+  Building Custom Rule D:/a/Flow88Mastering/Flow88Mastering/CMakeLists.txt
+  FlowLookAndFeel.cpp
+  FlowWidgets.cpp
+  juce_audio_processors.cpp
+  juce_gui_extra.cpp
+  juce_gui_basics.cpp
+  juce_graphics.cpp
+  juce_graphics_Harfbuzz.cpp
+  juce_events.cpp
+  juce_core.cpp
+  juce_core_CompilationTime.cpp
+  juce_data_structures.cpp
+  juce_audio_processors_headless.cpp
+  juce_audio_processors_headless_ara.cpp
+  juce_audio_processors_headless_lv2_libs.cpp
+  juce_audio_basics.cpp
+  Generating Code...
+  juce_graphics_Sheenbidi.c
+  Flow88MasterUI.vcxproj -> D:\a\Flow88Mastering\Flow88Mastering\build\Release\Flow88MasterUI.lib
+  Generating Flow88Master_artefacts/JuceLibraryCode/JuceHeader.h
+  Building Custom Rule D:/a/Flow88Mastering/Flow88Mastering/CMakeLists.txt
+  PluginProcessor.cpp
+  PluginEditor.cpp
+  juce_audio_processors.cpp
+  juce_gui_extra.cpp
+  juce_gui_basics.cpp
+  juce_graphics.cpp
+  juce_graphics_Harfbuzz.cpp
+  juce_events.cpp
+  juce_core.cpp
+  juce_core_CompilationTime.cpp
+  juce_data_structures.cpp
+  juce_audio_processors_headless.cpp
+  juce_audio_processors_headless_ara.cpp
+  juce_audio_processors_headless_lv2_libs.cpp
+  juce_audio_basics.cpp
+  juce_audio_utils.cpp
+  juce_audio_formats.cpp
+  juce_audio_devices.cpp
+  juce_dsp.cpp
+  juce_graphics_Sheenbidi.c
+  Flow88Master.vcxproj -> D:\a\Flow88Mastering\Flow88Mastering\build\Flow88Master_artefacts\Release\Flow88 Master_SharedCode.lib
+  Building Custom Rule D:/a/Flow88Mastering/Flow88Mastering/CMakeLists.txt
+  juce_audio_plugin_client_AAX.cpp
+  juce_audio_plugin_client_AAX_utils.cpp
+  juce_audio_plugin_client_ARA.cpp
+  juce_audio_plugin_client_LV2.cpp
+  juce_audio_plugin_client_Standalone.cpp
+  juce_audio_plugin_client_Unity.cpp
+  juce_audio_plugin_client_VST2.cpp
+  juce_audio_plugin_client_VST3.cpp
+     Creating library D:/a/Flow88Mastering/Flow88Mastering/build/Flow88Master_artefacts/Release/VST3/Flow88 Master.lib and object D:/a/Flow88Mastering/Flow88Mastering/build/Flow88Master_artefacts/Release/VST3/Flow88 Master.exp
+  Generating code
+  Finished generating code
+  Flow88Master_VST3.vcxproj -> D:\a\Flow88Mastering\Flow88Mastering\build\Flow88Master_artefacts\Release\VST3\Flow88 Master.vst3\Contents\x86_64-win\Flow88 Master.vst3
+  removing moduleinfo.json
+  creating D:/a/Flow88Mastering/Flow88Mastering/build/Flow88Master_artefacts/Release/VST3/Flow88 Master.vst3
+  Building Custom Rule D:/a/Flow88Mastering/Flow88Mastering/CMakeLists.txt
+  Building Custom Rule D:/a/Flow88Mastering/Flow88Mastering/CMakeLists.txt
+  FlowPresetEvaluation.cpp
+  juce_audio_formats.cpp
+  juce_audio_basics.cpp
+  juce_core.cpp
+  Flow88Acceptance.cpp
+  juce_audio_utils.cpp
+  juce_audio_processors.cpp
+  juce_gui_extra.cpp
+  juce_core_CompilationTime.cpp
+  juce_gui_basics.cpp
+  juce_graphics.cpp
+  juce_graphics_Harfbuzz.cpp
+  Flow88MasterValidation.vcxproj -> D:\a\Flow88Mastering\Flow88Mastering\build\Release\Flow88MasterValidation.lib
+  juce_events.cpp
+  Building Custom Rule D:/a/Flow88Mastering/Flow88Mastering/CMakeLists.txt
+  Building Custom Rule D:/a/Flow88Mastering/Flow88Mastering/CMakeLists.txt
+  juce_core.cpp
+  Flow88MasterTests.cpp
+  Flow88MasterEval.cpp
+  juce_audio_formats.cpp
+  juce_audio_basics.cpp
+  juce_core.cpp
+  juce_audio_formats.cpp
+  juce_audio_basics.cpp
+  juce_core.cpp
+  juce_core_CompilationTime.cpp
+  juce_data_structures.cpp
+  juce_audio_processors_headless.cpp
+  juce_core_CompilationTime.cpp
+D:\a\Flow88Mastering\Flow88Mastering\Tests\Flow88MasterTests.cpp(108,14): warning C4996: 'juce::AudioFormat::createWriterFor': Use the function taking an AudioFormatWriterOptions instead. [D:\a\Flow88Mastering\Flow88Mastering\build\Flow88MasterTests.vcxproj]
+  juce_audio_processors.cpp
+  juce_core_CompilationTime.cpp
+  juce_gui_extra.cpp
+  juce_audio_processors_headless_ara.cpp
+  juce_audio_processors_headless_lv2_libs.cpp
+  juce_gui_basics.cpp
+  juce_audio_basics.cpp
+  juce_audio_formats.cpp
+  juce_graphics.cpp
+  juce_audio_devices.cpp
+  juce_dsp.cpp
+  Generating code
+  juce_graphics_Harfbuzz.cpp
+  juce_events.cpp
+  juce_data_structures.cpp
+  juce_audio_processors_headless.cpp
+  juce_graphics_Sheenbidi.c
+  juce_audio_processors_headless_ara.cpp
+  juce_audio_processors_headless_lv2_libs.cpp
+  Generating code
+  juce_graphics_Sheenbidi.c
+  Generating code
+  Finished generating code
+  Flow88MasterEval.vcxproj -> D:\a\Flow88Mastering\Flow88Mastering\build\Flow88MasterEval_artefacts\Release\Flow88MasterEval.exe
+  Finished generating code
+  Flow88MasterTests.vcxproj -> D:\a\Flow88Mastering\Flow88Mastering\build\Flow88MasterTests_artefacts\Release\Flow88MasterTests.exe
+  Finished generating code
+  Flow88Acceptance.vcxproj -> D:\a\Flow88Mastering\Flow88Mastering\build\Flow88Acceptance_artefacts\Release\Flow88Acceptance.exe
+  Building Custom Rule D:/a/Flow88Mastering/Flow88Mastering/CMakeLists.txt

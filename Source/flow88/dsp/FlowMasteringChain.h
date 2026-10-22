@@ -49,6 +49,7 @@ class FlowMasteringChain {
 public:
   void prepare(double sampleRate, int maxBlockSize, int numChannels);
   void reset();
+  int getLatencySamples(int oversamplingIndex) const;
   FlowMasteringMetrics process(juce::AudioBuffer<float> &buffer,
                                const FlowMasteringSettings &settings);
 

@@ -15,3 +15,12 @@ Flow88MasterTests_artefacts/
 *.pdb
 *.ilk
 .DS_Store
+
+# Local verification and packaging outputs
+validator-sdk/
+validator-build/
+evidence-local/
+evidence/
+release/
+Flow88Mastering-Windows-VST3.zip
+Testing/

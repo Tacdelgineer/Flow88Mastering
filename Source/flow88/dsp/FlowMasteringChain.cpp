@@ -58,15 +58,21 @@ void FlowMasteringChain::prepare(double sampleRate, int maxBlockSize,
 
   oversamplers_[0] = std::make_unique<juce::dsp::Oversampling<float>>(
       static_cast<size_t>(numChannels_), 1,
-      juce::dsp::Oversampling<float>::filterHalfBandPolyphaseIIR, true, false);
+      juce::dsp::Oversampling<float>::filterHalfBandPolyphaseIIR, true, true);
   oversamplers_[1] = std::make_unique<juce::dsp::Oversampling<float>>(
       static_cast<size_t>(numChannels_), 2,
-      juce::dsp::Oversampling<float>::filterHalfBandPolyphaseIIR, true, false);
+      juce::dsp::Oversampling<float>::filterHalfBandPolyphaseIIR, true, true);
 
   for (auto &oversampler : oversamplers_)
     oversampler->initProcessing(static_cast<size_t>(juce::jmax(1, maxBlockSize)));
 
   reset();
+}
+
+int FlowMasteringChain::getLatencySamples(int oversamplingIndex) const {
+  if (oversamplingIndex <= 0 || oversamplingIndex > 2) return 0;
+  const auto& oversampler = oversamplers_[static_cast<size_t>(oversamplingIndex - 1)];
+  return oversampler == nullptr ? 0 : static_cast<int>(std::round(oversampler->getLatencyInSamples()));
 }
 
 void FlowMasteringChain::reset() {
