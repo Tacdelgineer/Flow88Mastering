@@ -14,25 +14,20 @@ std::function<std::unique_ptr<Processor>()> makeProcessor;
 void check(bool condition, const std::string& message) {
   if (!condition) throw std::runtime_error(message);
 }
-juce::RangedAudioParameter& parameter(Processor& p, const char* id) {
-  const std::vector<std::pair<std::string, juce::String>> names{
-    {ids::inputTrimDb,"Input Trim"},{ids::outputTrimDb,"Output Trim"},
-    {ids::toneTiltDb,"Tone"},{ids::punchPct,"Punch"},{ids::stereoWidthPct,"Width"},
-    {ids::lowEndFocusPct,"Low-End Focus"},{ids::targetLufs,"Target LUFS"},
-    {ids::attitudePct,"Attitude"},{ids::bypass,"Bypass"},{ids::oversampling,"Oversampling"},
-    {ids::limiterCeilingDbTP,"Limiter Ceiling"},{ids::clipperAmountPct,"Clipper Amount"},
-    {ids::resonanceControlPct,"Resonance Control"},{ids::referenceModeEnabled,"Reference Mode"},
-    {ids::subgenre,"Subgenre"},{ids::style,"Style"}};
-  juce::String name=id;
-  for(const auto& entry:names) if(entry.first==id) name=entry.second;
+Flow88MasterAudioProcessor* parameterModel = nullptr;
+juce::AudioProcessorParameter& parameter(Processor& p, const char* id) {
+  const auto* specification = parameterModel->getAPVTS().getParameter(id);
+  check(specification != nullptr, std::string("Unknown parameter: ") + id);
   for (auto* candidate : p.getParameters())
-    if (auto* ranged = dynamic_cast<juce::RangedAudioParameter*>(candidate))
-      if (ranged->getName(100) == name || ranged->paramID == id) return *ranged;
-  throw std::runtime_error(std::string("Missing parameter: ") + id);
+    if (candidate->getName(100) == specification->getName(100)) return *candidate;
+  throw std::runtime_error(std::string("Missing hosted parameter: ") + id);
 }
 void set(Processor& p, const char* id, float value) {
-  auto& param = parameter(p, id);
-  param.setValueNotifyingHost(param.convertTo0to1(value));
+  // Hosted VST3 parameters expose normalized values and are not JUCE's
+  // RangedAudioParameter subclass. Use the public layout for unit conversion.
+  const auto* specification = parameterModel->getAPVTS().getParameter(id);
+  check(specification != nullptr, std::string("Unknown parameter: ") + id);
+  parameter(p,id).setValueNotifyingHost(specification->convertTo0to1(value));
 }
 void prepare(Processor& p, double rate, int block) {
   p.setRateAndBufferSizeDetails(rate, block);
@@ -130,19 +125,31 @@ void controls() {
       {ids::toneTiltDb,-3,3},{ids::punchPct,0,100},{ids::stereoWidthPct,50,150},
       {ids::lowEndFocusPct,0,100},{ids::attitudePct,0,100},{ids::targetLufs,-16,-7},
       {ids::clipperAmountPct,0,100},{ids::resonanceControlPct,0,100},{ids::limiterCeilingDbTP,-1.5f,-0.1f}}) {
-    auto a=controlled(r.id,r.a,in), b=controlled(r.id,r.b,in);
+    auto stimulus = std::string(r.id)==ids::lowEndFocusPct ? signal(16384,48000,0.35f,80) :
+                    std::string(r.id)==ids::limiterCeilingDbTP ? signal(16384,48000,4.0f,3100) : in;
+    auto a=controlled(r.id,r.a,stimulus), b=controlled(r.id,r.b,stimulus);
     const auto delta=difference(a,b);
     std::cout<<r.id<<" audio RMS difference="<<delta<<"\n";
     check(delta>0.00001,std::string("Control had no audible signal effect: ")+r.id);
     if (std::string(r.id)==ids::outputTrimDb)
       check(std::abs(20*std::log10(rms(b)/rms(a))-6.0)<0.1,"Output trim not 6 dB on low-level material");
   }
+  const auto high=signal(16384,48000,0.02f,6000), low=signal(16384,48000,0.02f,80);
+  check(rms(controlled(ids::toneTiltDb,3,high)) > rms(controlled(ids::toneTiltDb,-3,high)), "Positive tone does not lift treble");
+  check(rms(controlled(ids::toneTiltDb,3,low)) < rms(controlled(ids::toneTiltDb,-3,low)), "Positive tone does not reduce bass");
+  const auto narrow=controlled(ids::stereoWidthPct,50,high), wide=controlled(ids::stereoWidthPct,150,high);
+  auto sideEnergy=[](const Buffer& b) {double sum=0; for(int i=1024;i<b.getNumSamples();++i) sum+=std::pow(b.getSample(0,i)-b.getSample(1,i),2); return sum;};
+  check(sideEnergy(wide)>sideEnergy(narrow), "Width increase does not raise side energy");
+}
+void checkDryDelay(const Buffer& in, const Buffer& out, int delay) {
+  for (int ch=0;ch<2;++ch) for(int i=delay;i<out.getNumSamples();++i)
+    check(std::abs(out.getSample(ch,i)-in.getSample(ch,i-delay))<1.0e-7f,"Bypass changes dry gain or delay");
 }
 void bypass() {
   auto p=makeProcessor(); set(*p,ids::bypass,1); set(*p,ids::inputTrimDb,12); set(*p,ids::outputTrimDb,12);
   set(*p,ids::oversampling,0); prepare(*p,48000,257);
   auto in=signal(8192,48000); auto out=render(*p,in,257);
-  check(difference(in,out,0)<1.0e-7,"Bypass changes gain or samples");
+  checkDryDelay(in,out,p->getLatencySamples());
   // Reproduce the non-unity A/B correction before enabling bypass.
   if (auto* direct=dynamic_cast<Flow88MasterAudioProcessor*>(p.get())) {
     set(*p,ids::bypass,0); set(*p,ids::inputTrimDb,0); set(*p,ids::outputTrimDb,0);
@@ -150,10 +157,11 @@ void bypass() {
     set(*p,ids::outputTrimDb,-6); render(*p,signal(288000,48000),512); direct->switchABSlot(0);
     check(std::abs(direct->buildDisplayState(0).abLevelMatchGainDb)>0.5f,"A/B fixture did not create gain correction");
     set(*p,ids::bypass,1); out=render(*p,in,257);
-    check(difference(in,out,0)<1.0e-7,"A/B correction leaks into bypass");
+    checkDryDelay(in,out,p->getLatencySamples());
   }
 }
 void extremes() {
+  bool passed=true;
   for (int os=0;os<3;++os) for (float end:{0.0f,1.0f}) {
     auto p=makeProcessor();
     for (auto* param:p->getParameters()) param->setValueNotifyingHost(end);
@@ -162,17 +170,19 @@ void extremes() {
     Buffer silence(2,4096); silence.clear(); auto quiet=render(*p,silence,64);
     check(quiet.getMagnitude(0,4096)<1.0e-7,"Silence generates audio");
     auto loud=signal(8192,48000,8.0f,12000); auto out=render(*p,loud,64); finite(out);
-    check(out.getMagnitude(0,8192)<1.25f,"Clipping/extremes produce uncontrolled sample peaks");
+    const auto peak=out.getMagnitude(0,8192);
+    std::cout<<"oversampling="<<os<<" parameter endpoint="<<end<<" sample peak="<<20*std::log10(peak)<<" dBFS\n";
+    passed=passed && peak<1.25f;
   }
+  check(passed,"Clipping/extremes produce uncontrolled sample peaks");
 }
 void latency() {
-  flow88::dsp::FlowMasteringChain chain; chain.prepare(48000,512,2);
   for(int os=0;os<3;++os) {
     auto p=makeProcessor(); set(*p,ids::oversampling,static_cast<float>(os)); prepare(*p,48000,512);
     // Compare to the actual oversampling filter delay, not a hard-coded host value.
     float expected=0;
-    if(os>0) { juce::dsp::Oversampling<float> filter(2,static_cast<size_t>(os),juce::dsp::Oversampling<float>::filterHalfBandPolyphaseIIR,true,true);
-      filter.initProcessing(512); expected=filter.getLatencyInSamples(); }
+    for(int mode=1;mode<=2;++mode) { juce::dsp::Oversampling<float> filter(2,static_cast<size_t>(mode),juce::dsp::Oversampling<float>::filterHalfBandPolyphaseIIR,true,true);
+      filter.initProcessing(512); expected=juce::jmax(expected,filter.getLatencyInSamples()); }
     std::cout<<"oversampling="<<os<<" expected latency="<<expected<<" reported="<<p->getLatencySamples()<<"\n";
     check(p->getLatencySamples()==static_cast<int>(std::round(expected)),"Oversampling latency not reported");
     set(*p,ids::bypass,1); Buffer impulse(2,512); impulse.clear(); impulse.setSample(0,0,0.25f); impulse.setSample(1,0,-0.25f);
@@ -220,6 +230,7 @@ int main(int argc,char** argv) {
   juce::ScopedJuceInitialiser_GUI initialise;
   try {
     check(argc>=2,"Expected test name and optional VST3 path");
+    Flow88MasterAudioProcessor model; parameterModel=&model;
     juce::AudioPluginFormatManager formats;
     if(argc>2) {
       formats.addFormat(std::make_unique<juce::VST3PluginFormat>());

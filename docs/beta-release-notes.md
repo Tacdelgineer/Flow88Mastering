@@ -11,8 +11,8 @@ and Linux distribution compatibility are untested.
 Known limitations: the limiter is an instantaneous gain limiter, not a mature
 lookahead mastering limiter; the loudness target drives a heuristic gain stage,
 not automatic normalization. A/B level matching is estimated. Oversampling mode
-changes reset filters and alter reported latency; stop transport before changing
-modes. Bypass preserves gain and the selected mode's delay, but seamless click-free
+changes reset filters; stop transport before changing modes. All modes and bypass
+use the same reported delay. Bypass preserves gain and the selected mode's delay, but seamless click-free
 switching has not been established. Reference files require their original path
 when reopening sessions. This is experimental software, not a flawless mastering
 or broadcast compliance tool.

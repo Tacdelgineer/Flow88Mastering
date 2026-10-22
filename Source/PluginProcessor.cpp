@@ -246,8 +246,12 @@ void Flow88MasterAudioProcessor::prepareToPlay(double sampleRate, int samplesPer
                                    masteringChain_.getLatencySamples(2)) + 1);
   bypassDelay_.clear();
   bypassWritePosition_ = 0;
-  setLatencySamples(masteringChain_.getLatencySamples(flow88::state::getChoiceParameterIndex(
-      apvts_, flow88::state::paramIds::oversampling)));
+  processingDelay_.setSize(2, bypassDelay_.getNumSamples());
+  processingDelay_.clear();
+  processingWritePosition_ = 0;
+  // Use a fixed delay for every mode. Mode automation must not notify the host
+  // (which takes listener locks) from inside the audio callback.
+  setLatencySamples(bypassDelay_.getNumSamples() - 1);
   meterSource_.prepare(sampleRate, samplesPerBlock);
 }
 
@@ -256,6 +260,8 @@ void Flow88MasterAudioProcessor::releaseResources() {
   meterSource_.reset();
   bypassDelay_.clear();
   bypassWritePosition_ = 0;
+  processingDelay_.clear();
+  processingWritePosition_ = 0;
 }
 
 bool Flow88MasterAudioProcessor::isBusesLayoutSupported(
@@ -296,9 +302,9 @@ void Flow88MasterAudioProcessor::processAudioBlock(juce::AudioBuffer<float>& buf
   }
 
   const auto bypassed = hostBypassed || bypassParam_->load() >= 0.5f;
-  const auto latency = masteringChain_.getLatencySamples(flow88::state::getChoiceParameterIndex(
-      apvts_, flow88::state::paramIds::oversampling));
-  setLatencySamples(latency);
+  const auto oversamplingIndex = flow88::state::getChoiceParameterIndex(
+      apvts_, flow88::state::paramIds::oversampling);
+  const auto latency = getLatencySamples();
   // Keep the dry history current even while processing, so bypass preserves PDC.
   if (bypassDelay_.getNumSamples() > latency) {
     const auto capacity = bypassDelay_.getNumSamples();
@@ -362,8 +368,7 @@ void Flow88MasterAudioProcessor::processAudioBlock(juce::AudioBuffer<float>& buf
     settings.dynamicsThresholdBiasDb = dynamicsThresholdBiasDb_.load();
     settings.limiterReleaseScale = limiterReleaseScale_.load();
     settings.harshnessAmount = harshnessAmount_.load();
-    settings.oversamplingIndex = flow88::state::getChoiceParameterIndex(
-        apvts_, flow88::state::paramIds::oversampling);
+    settings.oversamplingIndex = oversamplingIndex;
 
     const auto metrics = masteringChain_.process(buffer, settings);
 
@@ -408,6 +413,18 @@ void Flow88MasterAudioProcessor::processAudioBlock(juce::AudioBuffer<float>& buf
     for (int channel = 0; channel < buffer.getNumChannels(); ++channel)
       buffer.applyGainRamp(channel, 0, buffer.getNumSamples(), abMatchStart,
                            abMatchEnd);
+  if (!bypassed && processingDelay_.getNumSamples() > 0) {
+    const auto extraDelay = latency - masteringChain_.getLatencySamples(oversamplingIndex);
+    const auto capacity = processingDelay_.getNumSamples();
+    for (int i = 0; i < buffer.getNumSamples(); ++i) {
+      const auto readPosition = (processingWritePosition_ + capacity - extraDelay) % capacity;
+      for (int ch = 0; ch < juce::jmin(2, buffer.getNumChannels()); ++ch) {
+        processingDelay_.setSample(ch, processingWritePosition_, buffer.getSample(ch, i));
+        buffer.setSample(ch, i, processingDelay_.getSample(ch, readPosition));
+      }
+      processingWritePosition_ = (processingWritePosition_ + 1) % capacity;
+    }
+  }
   meterSource_.pushOutputBuffer(buffer);
 }
 

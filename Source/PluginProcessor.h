@@ -116,6 +116,8 @@ private:
   void processBuffer(juce::AudioBuffer<float>&, bool hostBypassed);
   void processAudioBlock(juce::AudioBuffer<float>&, bool hostBypassed);
   juce::AudioBuffer<float> bypassDelay_;
+  juce::AudioBuffer<float> processingDelay_;
+  int processingWritePosition_ = 0;
   int bypassWritePosition_ = 0;
   int preparedBlockSize_ = 1;
 
