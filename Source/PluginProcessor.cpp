@@ -240,13 +240,22 @@ void Flow88MasterAudioProcessor::prepareToPlay(double sampleRate, int samplesPer
       juce::Decibels::decibelsToGain(outputTrimParam_->load()));
   abLevelMatchGainSmoothed_.setCurrentAndTargetValue(
       juce::Decibels::decibelsToGain(abLevelMatchGainDb_.load()));
-  masteringChain_.prepare(sampleRate, samplesPerBlock, getTotalNumOutputChannels());
+  preparedBlockSize_ = juce::jmax(1, samplesPerBlock);
+  masteringChain_.prepare(sampleRate, preparedBlockSize_, getTotalNumOutputChannels());
+  bypassDelay_.setSize(2, juce::jmax(masteringChain_.getLatencySamples(1),
+                                   masteringChain_.getLatencySamples(2)) + 1);
+  bypassDelay_.clear();
+  bypassWritePosition_ = 0;
+  setLatencySamples(masteringChain_.getLatencySamples(flow88::state::getChoiceParameterIndex(
+      apvts_, flow88::state::paramIds::oversampling)));
   meterSource_.prepare(sampleRate, samplesPerBlock);
 }
 
 void Flow88MasterAudioProcessor::releaseResources() {
   masteringChain_.reset();
   meterSource_.reset();
+  bypassDelay_.clear();
+  bypassWritePosition_ = 0;
 }
 
 bool Flow88MasterAudioProcessor::isBusesLayoutSupported(
@@ -257,6 +266,27 @@ bool Flow88MasterAudioProcessor::isBusesLayoutSupported(
 
 void Flow88MasterAudioProcessor::processBlock(juce::AudioBuffer<float> &buffer,
                                               juce::MidiBuffer &) {
+  processBuffer(buffer, false);
+}
+
+void Flow88MasterAudioProcessor::processBlockBypassed(juce::AudioBuffer<float>& buffer,
+                                                      juce::MidiBuffer&) {
+  processBuffer(buffer, true);
+}
+
+void Flow88MasterAudioProcessor::processBuffer(juce::AudioBuffer<float>& buffer,
+                                               bool hostBypassed) {
+  // The prepare block size is a hint, not a guarantee. Reuse preallocated DSP
+  // storage by splitting oversized host buffers instead of allocating in process.
+  for (int offset = 0; offset < buffer.getNumSamples(); offset += preparedBlockSize_) {
+    const auto count = juce::jmin(preparedBlockSize_, buffer.getNumSamples() - offset);
+    juce::AudioBuffer<float> view(buffer.getArrayOfWritePointers(), buffer.getNumChannels(), offset, count);
+    processAudioBlock(view, hostBypassed);
+  }
+}
+
+void Flow88MasterAudioProcessor::processAudioBlock(juce::AudioBuffer<float>& buffer,
+                                                   bool hostBypassed) {
   juce::ScopedNoDenormals noDenormals;
   meterSource_.pushInputBuffer(buffer);
 
@@ -265,7 +295,22 @@ void Flow88MasterAudioProcessor::processBlock(juce::AudioBuffer<float> &buffer,
     return;
   }
 
-  const auto bypassed = bypassParam_->load() >= 0.5f;
+  const auto bypassed = hostBypassed || bypassParam_->load() >= 0.5f;
+  const auto latency = masteringChain_.getLatencySamples(flow88::state::getChoiceParameterIndex(
+      apvts_, flow88::state::paramIds::oversampling));
+  setLatencySamples(latency);
+  // Keep the dry history current even while processing, so bypass preserves PDC.
+  if (bypassDelay_.getNumSamples() > latency) {
+    const auto capacity = bypassDelay_.getNumSamples();
+    for (int i = 0; i < buffer.getNumSamples(); ++i) {
+      const auto readPosition = (bypassWritePosition_ + capacity - latency) % capacity;
+      for (int ch = 0; ch < juce::jmin(2, buffer.getNumChannels()); ++ch) {
+        bypassDelay_.setSample(ch, bypassWritePosition_, buffer.getSample(ch, i));
+        if (bypassed) buffer.setSample(ch, i, bypassDelay_.getSample(ch, readPosition));
+      }
+      bypassWritePosition_ = (bypassWritePosition_ + 1) % capacity;
+    }
+  }
 
   inputGainSmoothed_.setTargetValue(
       juce::Decibels::decibelsToGain(inputTrimParam_->load()));
@@ -359,9 +404,10 @@ void Flow88MasterAudioProcessor::processBlock(juce::AudioBuffer<float> &buffer,
     meterSource_.setGainReductionDb(0.0f);
   }
 
-  for (int channel = 0; channel < buffer.getNumChannels(); ++channel)
-    buffer.applyGainRamp(channel, 0, buffer.getNumSamples(), abMatchStart,
-                         abMatchEnd);
+  if (!bypassed)
+    for (int channel = 0; channel < buffer.getNumChannels(); ++channel)
+      buffer.applyGainRamp(channel, 0, buffer.getNumSamples(), abMatchStart,
+                           abMatchEnd);
   meterSource_.pushOutputBuffer(buffer);
 }
 
@@ -370,6 +416,7 @@ juce::AudioProcessorEditor *Flow88MasterAudioProcessor::createEditor() {
 }
 
 void Flow88MasterAudioProcessor::getStateInformation(juce::MemoryBlock &destData) {
+  sessionState_.captureSlot(sessionState_.getActiveABSlot(), apvts_.copyState());
   auto state = flow88::state::createPluginState(apvts_, sessionState_);
   std::unique_ptr<juce::XmlElement> xml(state.createXml());
   copyXmlToBinary(*xml, destData);
@@ -758,8 +805,9 @@ void Flow88MasterAudioProcessor::ensureSnapshotDefaults() {
   if (!sessionState_.hasSnapshotForSlot(inactiveSlot))
     sessionState_.captureSlot(inactiveSlot, apvts_.copyState());
 
-  if (const auto restored = sessionState_.restoreSlot(activeSlot); restored.isValid())
-    apvts_.replaceState(restored);
+  // The top-level APVTS is authoritative on restore. The active snapshot may
+  // predate the user's latest automation or knob edit.
+  sessionState_.captureSlot(activeSlot, apvts_.copyState());
 }
 
 float Flow88MasterAudioProcessor::targetForLoudnessPreset(int index) {

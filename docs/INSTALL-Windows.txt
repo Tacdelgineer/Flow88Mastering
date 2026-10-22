@@ -1,0 +1,16 @@
+Flow88 Master -- Windows x64 VST3 beta
+
+1. Close your DAW and extract the whole ZIP.
+2. Copy the entire "Flow88 Master.vst3" folder, including Contents, to:
+   C:\Program Files\Common Files\VST3\
+   Administrator permission may be required. Alternatively run install.bat.
+3. Start a 64-bit VST3 host and rescan plugins.
+4. Insert Flow88 Master on a stereo track or bus.
+
+Do not copy only the inner .vst3 binary. To uninstall, close your DAW and
+remove the entire Flow88 Master.vst3 folder from the VST3 directory.
+
+Windows x64 is the build target. Ableton Live and all other DAWs remain
+unverified unless explicitly documented in the accompanying evidence.
+macOS, Linux distribution packages, and Windows ARM64 are untested.
+See beta-release-notes.md for known limitations and BUILD.txt for provenance.

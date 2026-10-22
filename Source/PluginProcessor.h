@@ -69,6 +69,11 @@ public:
   bool isBusesLayoutSupported(const BusesLayout &layouts) const override;
   void processBlock(juce::AudioBuffer<float> &, juce::MidiBuffer &) override;
 
+  void processBlockBypassed(juce::AudioBuffer<float>&, juce::MidiBuffer&) override;
+  juce::AudioProcessorParameter* getBypassParameter() const override {
+    return apvts_.getParameter(flow88::state::paramIds::bypass);
+  }
+
   juce::AudioProcessorEditor *createEditor() override;
   bool hasEditor() const override { return true; }
 
@@ -108,6 +113,11 @@ public:
 
 private:
   class ReferenceAnalysisJob;
+  void processBuffer(juce::AudioBuffer<float>&, bool hostBypassed);
+  void processAudioBlock(juce::AudioBuffer<float>&, bool hostBypassed);
+  juce::AudioBuffer<float> bypassDelay_;
+  int bypassWritePosition_ = 0;
+  int preparedBlockSize_ = 1;
 
   juce::AudioProcessorValueTreeState apvts_;
   flow88::state::FlowSessionState sessionState_;

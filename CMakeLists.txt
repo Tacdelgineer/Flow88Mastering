@@ -25,6 +25,7 @@ set(JUCE_BUILD_EXTRAS OFF CACHE BOOL "" FORCE)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 add_subdirectory("${FLOW88_JUCE_DIR}" JUCE)
 
@@ -221,4 +222,20 @@ if(BUILD_TESTING)
     )
 
     add_test(NAME Flow88MasterTests COMMAND Flow88MasterTests)
+endif()
+
+if(BUILD_TESTING)
+    juce_add_console_app(Flow88Acceptance PRODUCT_NAME "Flow88 Acceptance")
+    target_sources(Flow88Acceptance PRIVATE Tests/Flow88Acceptance.cpp)
+    target_link_libraries(Flow88Acceptance PRIVATE Flow88Master Flow88MasterCore
+        juce::juce_audio_utils juce::juce_dsp)
+    target_compile_definitions(Flow88Acceptance PRIVATE
+        JUCE_WEB_BROWSER=0 JUCE_USE_CURL=0 JUCE_PLUGINHOST_VST3=1)
+    add_dependencies(Flow88Acceptance Flow88Master_VST3)
+    foreach(check lifecycle state audio controls bypass extremes latency truepeak)
+        add_test(NAME Processor.${check} COMMAND Flow88Acceptance ${check})
+        add_test(NAME VST3.${check} COMMAND Flow88Acceptance ${check}
+            "${CMAKE_BINARY_DIR}/Flow88Master_artefacts/$<CONFIG>/VST3/Flow88 Master.vst3")
+        set_tests_properties(Processor.${check} VST3.${check} PROPERTIES TIMEOUT 180)
+    endforeach()
 endif()
