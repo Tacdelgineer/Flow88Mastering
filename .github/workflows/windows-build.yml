@@ -2,11 +2,15 @@ name: Windows Build
 
 on:
   push:
-    branches: [main, 'fix/**']
+    branches: [main]
   pull_request:
     branches: [main]
   workflow_dispatch:
   workflow_call:
+
+concurrency:
+  group: windows-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 permissions:
   contents: read
@@ -24,6 +28,7 @@ jobs:
         uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
           submodules: recursive
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
       - name: Checkout Steinberg validator SDK
         uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
