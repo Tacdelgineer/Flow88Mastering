@@ -6,7 +6,7 @@ A simple Windows VST3 mastering plugin for electronic music producers.
 ![Plugin](https://img.shields.io/badge/Plugin-VST3-8A2BE2?style=for-the-badge)
 ![Built%20With](https://img.shields.io/badge/Built%20With-JUCE%20%2B%20C%2B%2B-orange?style=for-the-badge)
 ![AI%20Assisted](https://img.shields.io/badge/Made%20With-AI%20Assisted-ff69b4?style=for-the-badge)
-![Status](https://img.shields.io/badge/Status-Verification%20in%20progress-yellow?style=for-the-badge)
+![Status](https://img.shields.io/badge/Status-Release%20blocked-yellow?style=for-the-badge)
 ![License](https://img.shields.io/badge/License-MIT-black?style=for-the-badge)
 
 
@@ -46,7 +46,7 @@ If you want to compile Flow88 Master from the source code, follow these steps:
 
 ### Requirements
 - Windows 10/11
-- CMake 3.22+
+- CMake 3.25+ for the full validator workflow (3.22+ for the plugin alone)
 - Visual Studio 2022 (with "Desktop development with C++" workload)
 - JUCE 8.0.12 (You can place it in a local `JUCE/` folder or set the `JUCE_DIR` environment variable).
 
@@ -65,9 +65,10 @@ The compiled plugin will be located at `build/Flow88Master_artefacts/Release/VST
 This was built as part of a YouTube/video project showing how I used AI tools to design, code, debug, and iterate on a real audio plugin.
 
 ## Current status
-Verification is in progress. No beta should be published until the clean Windows
-build, Steinberg validator, and essential audio acceptance checks all pass.
-Ableton Live and other DAWs are unverified. See [verification](docs/verification.md).
+The clean Windows x64 Release build and Steinberg validator pass. The audio suite
+passes 13/17 checks; limiter and true-peak stress tests fail. No beta release is
+published from this branch. Ableton Live and other DAWs are unverified.
+See [verification and raw evidence](docs/verification.md).
 
 ## Roadmap
 - better installer

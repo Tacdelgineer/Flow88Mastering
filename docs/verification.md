@@ -1,8 +1,9 @@
 # Windows VST3 beta verification
 
-Release decision: **blocked**. No release or tag has been created. Essential
-limiter / true-peak stress checks fail. Windows CI is still being evaluated;
-this document will record the completed run before the investigation closes.
+Release decision: **blocked**. No `v0.1.0-beta` release or tag has been created,
+and the PR remains a draft, unmerged. Essential limiter / true-peak stress checks
+fail on both Windows and Linux. Packaging and ZIP upload were skipped by CI.
+The package script and desktop installation therefore remain unverified.
 
 ## Build investigation
 
@@ -44,16 +45,61 @@ logs/JUnit evidence, and prevents packaging/publication after failed checks.
 - Static libraries use position-independent code so a Linux test VST3 can link.
   No Linux distribution compatibility claim is made.
 
+## Native Windows results
+
+[Completed CI run 39720188614](https://github.com/Tacdelgineer/Flow88Mastering/actions/runs/39720188614)
+tested exact source commit `633f8cec3cc20506c2a051924b47187f734e4d5a`.
+The final evidence commit only updates documentation and raw logs; processor,
+test and workflow sources match that tested commit.
+
+Windows Server 2022, VS 2022, MSVC 19.44.35229.0, SDK 10.0.26100.0, x64 Release,
+JUCE 8.0.12. Clean configuration and the complete Release build succeeded.
+Steinberg Validator 3.8.0 build 66 passed 47 tests with zero failures. The
+processor/loaded-VST3 CTest suite passed 13 of 17 checks; all four failures are
+limiter/extreme-level checks. CI correctly concluded **failure**, uploaded the
+verification evidence, and skipped packaging and ZIP upload.
+
+| Required check | Native Windows result |
+| --- | --- |
+| Clean x64 Release build | Pass |
+| Steinberg VST3 Validator | Pass: 47/47 |
+| Plugin load/unload | Pass: five instances with editor creation/destruction |
+| Stereo audio | Pass: 90 rate/block/mode combinations in each test path |
+| Control DSP response | Pass: measured audio differences, trim, tone direction and width |
+| Bypass gain | Pass: unity dry gain and fixed six-sample delay; A/B correction regression included |
+| Presets / parameter reopening | Pass: processor profile selections and all parameter values serialized and reopened in new instances |
+| Multiple rates and blocks | Pass: 44.1/48/88.2/96/192 kHz; 1/17/64/257/512/1024 samples; zero and large variable blocks |
+| Silence, clipping, extremes | Silence passes; driven clipping/extreme values fail |
+| Limiter / true peak / oversampling / latency | Latency passes at all modes; limiter and true-peak safety fail |
+
+Raw permanent evidence:
+[build](verification/windows-build.log),
+[configuration](verification/windows-configure.log),
+[toolchain](verification/windows-toolchain.txt),
+[Steinberg validator](verification/windows-validator.log),
+[validator build](verification/windows-validator-build.log),
+[audio tests](verification/windows-tests.log),
+[JUnit](verification/windows-tests.xml), and
+[CI step conclusions](verification/windows-ci.json).
+The original [Actions evidence artifact](https://github.com/Tacdelgineer/Flow88Mastering/actions/runs/39720188614/artifacts/12402040077)
+expires according to repository retention; the text copies above remain in Git.
+
 ## Local evidence
 
 Ubuntu x64, GCC 13.3.0, CMake 3.28.3, Ninja, JUCE 8.0.12, Release. Local source and
 loaded-bundle tests are automated host tests, not DAW validation.
 
 The build and existing test suite pass. Steinberg Validator 3.8.0 build 66 reports
-47 tests passed, zero failed. State, lifecycle/editor open-close, DSP controls,
-bypass and fixed latency tests pass. The final corrected matrix is being rerun.
-The matrix spans 44.1/48/88.2/96/192 kHz, blocks 1/17/64/257/512/1024, and all
+47 tests passed, zero failed. The final CTest run passes 13 of 17 checks; the
+four failures are `Processor.extremes`, `VST3.extremes`, `Processor.truepeak`, and
+`VST3.truepeak`. State, lifecycle/editor creation and destruction, DSP controls, bypass, and
+fixed latency tests pass through the processor and loaded bundle. Every mode
+reports six samples of delay and bypass preserves that delay without a gain
+change. The matrix passes and spans 44.1/48/88.2/96/192 kHz, blocks 1/17/64/257/512/1024, and all
 three oversampling modes (90 combinations), plus zero and large variable blocks.
+Raw evidence: [CTest log](verification/linux-tests.log),
+[JUnit results](verification/linux-tests.xml), and
+[Steinberg validator log](verification/linux-validator.log).
 
 During test development, hosted parameter access was corrected to use normalized
 host parameters. Low-end controls are tested using bass rather than a treble-only

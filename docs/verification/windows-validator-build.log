@@ -1,0 +1,249 @@
+-- Selecting Windows SDK version 10.0.26100.0 to target Windows 10.0.20348.
+-- The C compiler identification is MSVC 19.44.35229.0
+-- The CXX compiler identification is MSVC 19.44.35229.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/cl.exe - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/cl.exe - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- [SMTG] SMTG_AAX_SDK_PATH is not set. If you need it, please download the AAX SDK!
+-- Could NOT find LIBJACK (missing: LIBJACK_LIBRARIES LIBJACK_INCLUDE_DIR) 
+-- Performing Test SMTG_USE_STDATOMIC_H
+-- Performing Test SMTG_USE_STDATOMIC_H - Failed
+-- Configuring done (4.3s)
+-- Generating done (0.1s)
+-- Build files have been written to: D:/a/Flow88Mastering/Flow88Mastering/validator-build
+MSBuild version 17.14.60+43b635718 for .NET Framework
+
+  1>Checking Build System
+  Building Custom Rule D:/a/Flow88Mastering/Flow88Mastering/validator-sdk/CMakeLists.txt
+  Building Custom Rule D:/a/Flow88Mastering/Flow88Mastering/validator-sdk/CMakeLists.txt
+  conststringtable.cpp
+  coreiids.cpp
+  funknown.cpp
+  ustring.cpp
+  baseiids.cpp
+  fbuffer.cpp
+  fdebug.cpp
+  fdynlib.cpp
+  fobject.cpp
+  pluginterfaces.vcxproj -> D:\a\Flow88Mastering\Flow88Mastering\validator-build\lib\Release\pluginterfaces.lib
+  fstreamer.cpp
+  fstring.cpp
+  timer.cpp
+  updatehandler.cpp
+  fcondition.cpp
+  flock.cpp
+  base.vcxproj -> D:\a\Flow88Mastering\Flow88Mastering\validator-build\lib\Release\base.lib
+  Building Custom Rule D:/a/Flow88Mastering/Flow88Mastering/validator-sdk/CMakeLists.txt
+  commoniids.cpp
+  commonstringconvert.cpp
+  openurl.cpp
+  systemclipboard_linux.cpp
+  systemclipboard_win32.cpp
+  threadchecker_linux.cpp
+  threadchecker_win32.cpp
+  readfile.cpp
+  vstpresetfile.cpp
+  sdk_common.vcxproj -> D:\a\Flow88Mastering\Flow88Mastering\validator-build\lib\Release\sdk_common.lib
+  Building Custom Rule D:/a/Flow88Mastering/Flow88Mastering/validator-sdk/CMakeLists.txt
+  connectionproxy.cpp
+  eventlist.cpp
+  hostclasses.cpp
+  module.cpp
+  parameterchanges.cpp
+  pluginterfacesupport.cpp
+  processdata.cpp
+  stringconvert.cpp
+  vstinitiids.cpp
+  sdk_hosting.vcxproj -> D:\a\Flow88Mastering\Flow88Mastering\validator-build\lib\Release\sdk_hosting.lib
+  Building Custom Rule D:/a/Flow88Mastering/Flow88Mastering/validator-sdk/public.sdk/samples/vst-hosting/validator/CMakeLists.txt
+  memorystream.cpp
+  moduleinit.cpp
+  moduleinfoparser.cpp
+  connectionproxytest.cpp
+  eventlisttest.cpp
+  hostclassestest.cpp
+  parameterchangestest.cpp
+  pluginterfacesupporttest.cpp
+  processdatatest.cpp
+  plugprovider.cpp
+  busactivation.cpp
+  busconsistency.cpp
+  businvalidindex.cpp
+  checkaudiobusarrangement.cpp
+  scanbusses.cpp
+  sidechainarrangement.cpp
+  editorclasses.cpp
+  midilearn.cpp
+  midimapping.cpp
+  plugcompat.cpp
+  scanparameters.cpp
+  suspendresume.cpp
+  terminit.cpp
+  keyswitch.cpp
+  noteexpression.cpp
+  automation.cpp
+  process.cpp
+  processcontextrequirements.cpp
+  processformat.cpp
+  processinputoverwriting.cpp
+  processtail.cpp
+  processthreaded.cpp
+  silenceflags.cpp
+  silenceprocessing.cpp
+  speakerarrangement.cpp
+  variableblocksize.cpp
+  bypasspersistence.cpp
+  invalidstatetransition.cpp
+  repeatidenticalstatetransition.cpp
+  validstatetransition.cpp
+  testbase.cpp
+  checkunitstructure.cpp
+  scanprograms.cpp
+  scanunits.cpp
+  vsttestsuite.cpp
+  testing.cpp
+  main.cpp
+  usediids.cpp
+  validator.cpp
+  module_win32.cpp
+  validator.vcxproj -> D:\a\Flow88Mastering\Flow88Mastering\validator-build\bin\Release\validator.exe
+  Running validator selftest:
+  
+  [ConnectionProxy: Connect and disconnect]
+  [Succeeded]
+  
+  [ConnectionProxy: Disconnect wrong object]
+  [Succeeded]
+  
+  [ConnectionProxy: Send message on UI thread]
+  [Succeeded]
+  
+  [ConnectionProxy: Send message on 2nd thread]
+  [Succeeded]
+  
+  [EventList: Set and get single event]
+  [Succeeded]
+  
+  [EventList: Count events]
+  [Succeeded]
+  
+  [EventList: Overflow]
+  [Succeeded]
+  
+  [EventList: Get unknown event]
+  [Succeeded]
+  
+  [EventList: Resize]
+  [Succeeded]
+  
+  [HostApplication: Create instance of IAttributeList]
+  [Succeeded]
+  
+  [HostApplication: Create instance of IMessage]
+  [Succeeded]
+  
+  [HostAttributeList: Int]
+  [Succeeded]
+  
+  [HostAttributeList: Float]
+  [Succeeded]
+  
+  [HostAttributeList: String]
+  [Succeeded]
+  
+  [HostAttributeList: Binary]
+  [Succeeded]
+  
+  [HostAttributeList: Multiple Set]
+  [Succeeded]
+  
+  [ParameterValueQueue: Set paramID]
+  [Succeeded]
+  
+  [ParameterValueQueue: Set/get point]
+  [Succeeded]
+  
+  [ParameterValueQueue: Set/get multiple points]
+  [Succeeded]
+  
+  [ParameterValueQueue: Ordered points]
+  [Succeeded]
+  
+  [ParameterValueQueue: Clear]
+  [Succeeded]
+  
+  [ParameterChanges: Parameter count]
+  [Succeeded]
+  
+  [ParameterChanges: Clear queue]
+  [Succeeded]
+  
+  [ParameterChanges: Increase max parameters]
+  [Succeeded]
+  
+  [ParameterChanges: Get parameter data]
+  [Succeeded]
+  
+  [ParameterChangeTransfer: Add/get change]
+  [Succeeded]
+  
+  [ParameterChangeTransfer: Remove changes]
+  [Succeeded]
+  
+  [ParameterChangeTransfer: Transfer changes to]
+  [Succeeded]
+  
+  [ParameterChangeTransfer: Transfer changes from]
+  [Succeeded]
+  
+  [PlugInterfaceSupport: Initial interfaces]
+  [Succeeded]
+  
+  [PlugInterfaceSupport: Add interface]
+  [Succeeded]
+  
+  [PlugInterfaceSupport: Remove interface]
+  [Succeeded]
+  
+  [HostProcessData: No bus]
+  [Succeeded]
+  
+  [HostProcessData: 1 out bus no channels]
+  [Succeeded]
+  
+  [HostProcessData: 1 out bus 2 channels]
+  [Succeeded]
+  
+  [HostProcessData: 1 in & out bus 2 channels]
+  [Succeeded]
+  
+  [HostProcessData: 2 in & out bus dif channels]
+  [Succeeded]
+  
+  [HostProcessData: Set all channel buffers 32]
+  [Succeeded]
+  
+  [HostProcessData: Set all channel buffers 64]
+  [Succeeded]
+  
+  [HostProcessData: Set individual channel buffers 32]
+  [Succeeded]
+  
+  [HostProcessData: Set individual channel buffers 32 combined]
+  [Succeeded]
+  
+  [HostProcessData: Set individual channel buffers 64]
+  [Succeeded]
+  
+  [HostProcessData: Set individual channel buffers 64 combined]
+  [Succeeded]
+  
+  Executed 43 Tests.
+  0 failed test(s).

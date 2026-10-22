@@ -1,0 +1,85 @@
+Internal ctest changing into directory: /home/alireza/Flow88Mastering/build
+Test project /home/alireza/Flow88Mastering/build
+      Start  1: Flow88MasterTests
+ 1/17 Test  #1: Flow88MasterTests ................   Passed    0.52 sec
+      Start  2: Processor.lifecycle
+ 2/17 Test  #2: Processor.lifecycle ..............   Passed    0.05 sec
+      Start  3: VST3.lifecycle
+ 3/17 Test  #3: VST3.lifecycle ...................   Passed    0.17 sec
+      Start  4: Processor.state
+ 4/17 Test  #4: Processor.state ..................   Passed    0.10 sec
+      Start  5: VST3.state
+ 5/17 Test  #5: VST3.state .......................   Passed    0.91 sec
+      Start  6: Processor.audio
+ 6/17 Test  #6: Processor.audio ..................   Passed    0.41 sec
+      Start  7: VST3.audio
+ 7/17 Test  #7: VST3.audio .......................   Passed    3.07 sec
+      Start  8: Processor.controls
+ 8/17 Test  #8: Processor.controls ...............   Passed    0.15 sec
+      Start  9: VST3.controls
+ 9/17 Test  #9: VST3.controls ....................   Passed    0.91 sec
+      Start 10: Processor.bypass
+10/17 Test #10: Processor.bypass .................   Passed    0.12 sec
+      Start 11: VST3.bypass
+11/17 Test #11: VST3.bypass ......................   Passed    0.02 sec
+      Start 12: Processor.extremes
+12/17 Test #12: Processor.extremes ...............***Failed    0.04 sec
+oversampling=0 parameter endpoint=0 sample peak=-13.7002 dBFS
+oversampling=0 parameter endpoint=1 sample peak=-0.687721 dBFS
+oversampling=1 parameter endpoint=0 sample peak=-12.0338 dBFS
+oversampling=1 parameter endpoint=1 sample peak=3.59798 dBFS
+oversampling=2 parameter endpoint=0 sample peak=-12.137 dBFS
+oversampling=2 parameter endpoint=1 sample peak=2.65422 dBFS
+FAIL extremes: Clipping/extremes produce uncontrolled sample peaks
+
+      Start 13: VST3.extremes
+13/17 Test #13: VST3.extremes ....................***Failed    0.19 sec
+oversampling=0 parameter endpoint=0 sample peak=-13.7002 dBFS
+oversampling=0 parameter endpoint=1 sample peak=-0.687721 dBFS
+oversampling=1 parameter endpoint=0 sample peak=-12.0338 dBFS
+oversampling=1 parameter endpoint=1 sample peak=3.59798 dBFS
+oversampling=2 parameter endpoint=0 sample peak=-12.137 dBFS
+oversampling=2 parameter endpoint=1 sample peak=2.65422 dBFS
+FAIL extremes: Clipping/extremes produce uncontrolled sample peaks
+
+      Start 14: Processor.latency
+14/17 Test #14: Processor.latency ................   Passed    0.02 sec
+      Start 15: VST3.latency
+15/17 Test #15: VST3.latency .....................   Passed    0.09 sec
+      Start 16: Processor.truepeak
+16/17 Test #16: Processor.truepeak ...............***Failed    0.07 sec
+rate=44100 oversampling=0 sample peak=-1.47382 dBFS; independent 16x reconstructed peak=5.64431 dBTP (ceiling -1.0)
+rate=44100 oversampling=1 sample peak=1.9982 dBFS; independent 16x reconstructed peak=2.79518 dBTP (ceiling -1.0)
+rate=44100 oversampling=2 sample peak=1.52821 dBFS; independent 16x reconstructed peak=1.84585 dBTP (ceiling -1.0)
+rate=48000 oversampling=0 sample peak=-1.47382 dBFS; independent 16x reconstructed peak=5.64431 dBTP (ceiling -1.0)
+rate=48000 oversampling=1 sample peak=1.9982 dBFS; independent 16x reconstructed peak=2.80142 dBTP (ceiling -1.0)
+rate=48000 oversampling=2 sample peak=1.52824 dBFS; independent 16x reconstructed peak=1.84557 dBTP (ceiling -1.0)
+rate=96000 oversampling=0 sample peak=-1.47382 dBFS; independent 16x reconstructed peak=5.64431 dBTP (ceiling -1.0)
+rate=96000 oversampling=1 sample peak=1.9982 dBFS; independent 16x reconstructed peak=2.81297 dBTP (ceiling -1.0)
+rate=96000 oversampling=2 sample peak=1.5305 dBFS; independent 16x reconstructed peak=1.84582 dBTP (ceiling -1.0)
+FAIL truepeak: True-peak ceiling exceeded on driven intersample stress signal
+
+      Start 17: VST3.truepeak
+17/17 Test #17: VST3.truepeak ....................***Failed    0.29 sec
+rate=44100 oversampling=0 sample peak=-1.47382 dBFS; independent 16x reconstructed peak=5.64431 dBTP (ceiling -1.0)
+rate=44100 oversampling=1 sample peak=1.9982 dBFS; independent 16x reconstructed peak=2.79518 dBTP (ceiling -1.0)
+rate=44100 oversampling=2 sample peak=1.52821 dBFS; independent 16x reconstructed peak=1.84585 dBTP (ceiling -1.0)
+rate=48000 oversampling=0 sample peak=-1.47382 dBFS; independent 16x reconstructed peak=5.64431 dBTP (ceiling -1.0)
+rate=48000 oversampling=1 sample peak=1.9982 dBFS; independent 16x reconstructed peak=2.80142 dBTP (ceiling -1.0)
+rate=48000 oversampling=2 sample peak=1.52824 dBFS; independent 16x reconstructed peak=1.84557 dBTP (ceiling -1.0)
+rate=96000 oversampling=0 sample peak=-1.47382 dBFS; independent 16x reconstructed peak=5.64431 dBTP (ceiling -1.0)
+rate=96000 oversampling=1 sample peak=1.9982 dBFS; independent 16x reconstructed peak=2.81297 dBTP (ceiling -1.0)
+rate=96000 oversampling=2 sample peak=1.5305 dBFS; independent 16x reconstructed peak=1.84582 dBTP (ceiling -1.0)
+FAIL truepeak: True-peak ceiling exceeded on driven intersample stress signal
+
+
+76% tests passed, 4 tests failed out of 17
+
+Total Test time (real) =   7.14 sec
+
+The following tests FAILED:
+	 12 - Processor.extremes (Failed)
+	 13 - VST3.extremes (Failed)
+	 16 - Processor.truepeak (Failed)
+	 17 - VST3.truepeak (Failed)
+Errors while running CTest

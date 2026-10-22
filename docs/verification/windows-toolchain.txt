@@ -1,0 +1,4 @@
+cmake version 3.31.6
+
+CMake suite maintained and supported by Kitware (kitware.com/cmake).
+ 29396c22c93392d6738e021b83196283d6e4d850 JUCE (29396c2)
