@@ -108,11 +108,16 @@ void audioMatrix() {
       double delta=0; for(int i=1024;i<4096;++i) delta+=std::abs(out.getSample(0,i)-out.getSample(1,i));
       check(delta>1.0,"Stereo channels collapsed"); p->releaseResources();
     }
-  // A host may deliver a block larger than the prepare hint, or a zero-length block.
-  auto p=makeProcessor(); prepare(*p,48000,64);
+  // The JUCE processor API permits blocks above its prepare hint. The VST3
+  // protocol has a negotiated maximum: exceeding it corrupts JUCE wrapper
+  // scratch storage before the processor runs. Keep that separate from the
+  // direct processor's oversized-block regression.
+  auto p=makeProcessor();
+  const bool direct=dynamic_cast<Flow88MasterAudioProcessor*>(p.get())!=nullptr;
+  prepare(*p,48000,direct?64:2049);
   juce::MidiBuffer midi; Buffer zero(2,0); p->processBlock(zero,midi);
   Buffer large=signal(2049,48000); p->processBlock(large,midi); finite(large);
-  std::cout << "90 stereo rate/block/oversampling combinations; zero and oversized blocks\n";
+  std::cout << "90 stereo rate/block/oversampling combinations; zero and large variable blocks\n";
 }
 Buffer controlled(const char* id,float value,const Buffer& in) {
   auto p=makeProcessor(); set(*p,ids::oversampling,0); set(*p,id,value); prepare(*p,48000,257);

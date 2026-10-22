@@ -6,7 +6,7 @@ A simple Windows VST3 mastering plugin for electronic music producers.
 ![Plugin](https://img.shields.io/badge/Plugin-VST3-8A2BE2?style=for-the-badge)
 ![Built%20With](https://img.shields.io/badge/Built%20With-JUCE%20%2B%20C%2B%2B-orange?style=for-the-badge)
 ![AI%20Assisted](https://img.shields.io/badge/Made%20With-AI%20Assisted-ff69b4?style=for-the-badge)
-![Status](https://img.shields.io/badge/Status-Early%20Release-yellow?style=for-the-badge)
+![Status](https://img.shields.io/badge/Status-Verification%20in%20progress-yellow?style=for-the-badge)
 ![License](https://img.shields.io/badge/License-MIT-black?style=for-the-badge)
 
 
@@ -15,7 +15,7 @@ A simple Windows VST3 mastering plugin for electronic music producers.
 
 
 ## What it is
-Flow88 Mastering is a small Windows VST3 mastering plugin I built with AI-assisted development. It gives electronic music producers a simple master-bus tool with metering, tone shaping, width, saturation, clipping/limiting, presets, and A/B comparison. It works, but it is still early and experimental.
+Flow88 Mastering is a small Windows VST3 mastering plugin I built with AI-assisted development. It gives electronic music producers a simple master-bus tool with metering, tone shaping, width, saturation, clipping/limiting, presets, and A/B comparison. It is experimental. See [verification evidence](docs/verification.md) before relying on its output.
 
 ## What it does
 - master-bus tone shaping
@@ -53,8 +53,11 @@ If you want to compile Flow88 Master from the source code, follow these steps:
 ### Building
 Alternatively, build manually via CMake:
 ```powershell
-cmake -S . -B build -G "Visual Studio 17 2022"
-cmake --build build --config Release --parallel
+git clone --recurse-submodules https://github.com/Tacdelgineer/Flow88Mastering.git
+cd Flow88Mastering
+cmake -S . -B build -G "Visual Studio 17 2022" -A x64 -DBUILD_TESTING=ON
+cmake --build build --config Release --parallel 4
+ctest --test-dir build -C Release --output-on-failure
 ```
 The compiled plugin will be located at `build/Flow88Master_artefacts/Release/VST3/Flow88 Master.vst3`.
 
@@ -62,9 +65,9 @@ The compiled plugin will be located at `build/Flow88Master_artefacts/Release/VST
 This was built as part of a YouTube/video project showing how I used AI tools to design, code, debug, and iterate on a real audio plugin.
 
 ## Current status
-Early public release.
-Works on my setup.
-Needs more testing across DAWs/systems.
+Verification is in progress. No beta should be published until the clean Windows
+build, Steinberg validator, and essential audio acceptance checks all pass.
+Ableton Live and other DAWs are unverified. See [verification](docs/verification.md).
 
 ## Roadmap
 - better installer

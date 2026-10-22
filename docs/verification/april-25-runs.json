@@ -1,0 +1,130 @@
+[
+  {
+    "run_id": 24919620338,
+    "job_id": 72978502691,
+    "url": "https://github.com/Tacdelgineer/Flow88Mastering/actions/runs/24919620338",
+    "logs": "Expired: HTTP 410",
+    "annotations": [
+      {
+        "path": ".github",
+        "blob_href": "https://github.com/Tacdelgineer/Flow88Mastering/blob/a29ff1d19953509e1728bf079e70d64a64e3edb3/.github",
+        "start_line": 3,
+        "start_column": null,
+        "end_line": 3,
+        "end_column": null,
+        "annotation_level": "warning",
+        "title": "",
+        "message": "Node.js 20 actions are deprecated. The following actions are running on Node.js 20 and may not work as expected: actions/checkout@v4. Actions will be forced to run with Node.js 24 by default starting June 2nd, 2026. Node.js 20 will be removed from the runner on September 16th, 2026. Please check if updated versions of these actions are available that support Node.js 24. To opt into Node.js 24 now, set the FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true environment variable on the runner or in your workflow file. Once Node.js 24 becomes the default, you can temporarily opt out by setting ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/",
+        "raw_details": ""
+      },
+      {
+        "path": ".github",
+        "blob_href": "https://github.com/Tacdelgineer/Flow88Mastering/blob/a29ff1d19953509e1728bf079e70d64a64e3edb3/.github",
+        "start_line": 28,
+        "start_column": null,
+        "end_line": 28,
+        "end_column": null,
+        "annotation_level": "failure",
+        "title": "",
+        "message": "Process completed with exit code 1.",
+        "raw_details": ""
+      }
+    ]
+  },
+  {
+    "run_id": 24919609118,
+    "job_id": 72978471439,
+    "url": "https://github.com/Tacdelgineer/Flow88Mastering/actions/runs/24919609118",
+    "logs": "Expired: HTTP 410",
+    "annotations": [
+      {
+        "path": ".github",
+        "blob_href": "https://github.com/Tacdelgineer/Flow88Mastering/blob/e1ac1128d12d49ab03d27f9d930fd2da74f17e9e/.github",
+        "start_line": 3,
+        "start_column": null,
+        "end_line": 3,
+        "end_column": null,
+        "annotation_level": "warning",
+        "title": "",
+        "message": "Node.js 20 actions are deprecated. The following actions are running on Node.js 20 and may not work as expected: actions/checkout@v4. Actions will be forced to run with Node.js 24 by default starting June 2nd, 2026. Node.js 20 will be removed from the runner on September 16th, 2026. Please check if updated versions of these actions are available that support Node.js 24. To opt into Node.js 24 now, set the FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true environment variable on the runner or in your workflow file. Once Node.js 24 becomes the default, you can temporarily opt out by setting ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/",
+        "raw_details": ""
+      },
+      {
+        "path": ".github",
+        "blob_href": "https://github.com/Tacdelgineer/Flow88Mastering/blob/e1ac1128d12d49ab03d27f9d930fd2da74f17e9e/.github",
+        "start_line": 28,
+        "start_column": null,
+        "end_line": 28,
+        "end_column": null,
+        "annotation_level": "failure",
+        "title": "",
+        "message": "Process completed with exit code 1.",
+        "raw_details": ""
+      }
+    ]
+  },
+  {
+    "run_id": 24919554700,
+    "job_id": 72978326731,
+    "url": "https://github.com/Tacdelgineer/Flow88Mastering/actions/runs/24919554700",
+    "logs": "Expired: HTTP 410",
+    "annotations": [
+      {
+        "path": ".github",
+        "blob_href": "https://github.com/Tacdelgineer/Flow88Mastering/blob/5fce19fd447a986116429e6652581071577229a0/.github",
+        "start_line": 3,
+        "start_column": null,
+        "end_line": 3,
+        "end_column": null,
+        "annotation_level": "warning",
+        "title": "",
+        "message": "Node.js 20 actions are deprecated. The following actions are running on Node.js 20 and may not work as expected: actions/checkout@v4. Actions will be forced to run with Node.js 24 by default starting June 2nd, 2026. Node.js 20 will be removed from the runner on September 16th, 2026. Please check if updated versions of these actions are available that support Node.js 24. To opt into Node.js 24 now, set the FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true environment variable on the runner or in your workflow file. Once Node.js 24 becomes the default, you can temporarily opt out by setting ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/",
+        "raw_details": ""
+      },
+      {
+        "path": ".github",
+        "blob_href": "https://github.com/Tacdelgineer/Flow88Mastering/blob/5fce19fd447a986116429e6652581071577229a0/.github",
+        "start_line": 28,
+        "start_column": null,
+        "end_line": 28,
+        "end_column": null,
+        "annotation_level": "failure",
+        "title": "",
+        "message": "Process completed with exit code 1.",
+        "raw_details": ""
+      }
+    ]
+  },
+  {
+    "run_id": 24919402750,
+    "job_id": 72977899842,
+    "url": "https://github.com/Tacdelgineer/Flow88Mastering/actions/runs/24919402750",
+    "logs": "Expired: HTTP 410",
+    "annotations": [
+      {
+        "path": ".github",
+        "blob_href": "https://github.com/Tacdelgineer/Flow88Mastering/blob/3596b3a6acf8e33511c4f178655d5578fd22cbeb/.github",
+        "start_line": 3,
+        "start_column": null,
+        "end_line": 3,
+        "end_column": null,
+        "annotation_level": "warning",
+        "title": "",
+        "message": "Node.js 20 actions are deprecated. The following actions are running on Node.js 20 and may not work as expected: actions/checkout@v4. Actions will be forced to run with Node.js 24 by default starting June 2nd, 2026. Node.js 20 will be removed from the runner on September 16th, 2026. Please check if updated versions of these actions are available that support Node.js 24. To opt into Node.js 24 now, set the FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true environment variable on the runner or in your workflow file. Once Node.js 24 becomes the default, you can temporarily opt out by setting ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/",
+        "raw_details": ""
+      },
+      {
+        "path": ".github",
+        "blob_href": "https://github.com/Tacdelgineer/Flow88Mastering/blob/3596b3a6acf8e33511c4f178655d5578fd22cbeb/.github",
+        "start_line": 28,
+        "start_column": null,
+        "end_line": 28,
+        "end_column": null,
+        "annotation_level": "failure",
+        "title": "",
+        "message": "Process completed with exit code 1.",
+        "raw_details": ""
+      }
+    ]
+  }
+]
